@@ -370,9 +370,9 @@ async function renderClientTable(filter = '', forceRefresh = true) {
     allClients.forEach(c => {
         const s = clientStatuses[c.client_id];
         if (s) {
-            if (s.sent) sentCount++;
+            if (s.sent || s.accessed) sentCount++;
             if (s.active) activeCount++;
-            if (s.proposal) proposalCount++;
+            if (s.totalProposal) proposalCount++;
         }
     });
 
@@ -395,9 +395,9 @@ async function renderClientTable(filter = '', forceRefresh = true) {
         filtered = filtered.filter(c => {
             const s = clientStatuses[c.client_id];
             if (!s) return false;
-            if (activeKpiFilter === 'sent') return s.sent;
+            if (activeKpiFilter === 'sent') return s.sent || s.accessed;
             if (activeKpiFilter === 'active') return s.active;
-            if (activeKpiFilter === 'proposal') return s.proposal;
+            if (activeKpiFilter === 'proposal') return s.totalProposal;
             return true;
         });
     }
@@ -446,12 +446,19 @@ async function renderClientTable(filter = '', forceRefresh = true) {
 
 function getClientStatus(events) {
     const names = events.map(e => e.event);
+    const isSubmitted = names.includes('proposal_submitted');
+    const isProposal  = names.includes('proposal_generated');
+    const isActive    = names.includes('conversation_started');
+    const isAccessed  = names.includes('bot_accessed');
+    const isSent      = names.includes('bot_sent');
+    
     return {
-        sent:     names.includes('bot_sent'),
-        accessed: names.includes('bot_accessed'),
-        active:   names.includes('conversation_started'),
-        proposal: names.includes('proposal_generated'),
-        submitted:names.includes('proposal_submitted'),
+        submitted: isSubmitted,
+        proposal: isProposal && !isSubmitted,
+        active: isActive && !isProposal && !isSubmitted,
+        accessed: isAccessed && !isActive && !isProposal && !isSubmitted,
+        sent: isSent && !isAccessed && !isActive && !isProposal && !isSubmitted,
+        totalProposal: isProposal || isSubmitted
     };
 }
 
