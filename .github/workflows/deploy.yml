@@ -34,6 +34,7 @@ jobs:
         working-directory: ./frontend
         env:
           VITE_BASE_PATH: /Pre-Sales-Agent/
+          VITE_API_URL: https://pre-sales-agent-1.onrender.com
         run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
