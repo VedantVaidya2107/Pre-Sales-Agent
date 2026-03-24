@@ -16,6 +16,8 @@ let pendingBlob = null, pendingName = '';
 let fileContent = '';
 let currentTrackingClient = null;
 let activeClientId = null;
+let activeKpiFilter = 'all';
+let clientStatuses = {};
 
 /* ══ ENHANCED ZOHO KNOWLEDGE BASE WITH NATURAL LANGUAGE UNDERSTANDING ══ */
 const ZK = `You are a high-performing Senior Presales Solutions Architect at Fristine Infotech (India's leading Premium Zoho Partner, 10 years, 200+ implementations).
@@ -151,6 +153,7 @@ QUALITY CHECKLIST BEFORE RESPONDING:
 async function init() {
     initTheme();
     initPasswordToggle();
+    initKpis();
     const params = new URLSearchParams(window.location.search);
     const clientId = params.get('client');
 
@@ -321,44 +324,93 @@ function animateDashboardEntrance() {
     gsap.from('.table-wrap', { opacity: 0, y: 20, duration: 0.5, delay: 0.3, ease: 'power3.out' });
 }
 
-async function renderClientTable(filter = '') {
-    const tbody = document.getElementById('clientTableBody');
-    try {
-        allClients = await clients.list();
-    } catch (e) {
-        console.warn('[Table] Could not refresh clients:', e);
+async function loadClientStatuses() {
+    clientStatuses = {};
+    for (const c of allClients) {
+        try { 
+            const evts = await tracking.getEvents(c.client_id || ''); 
+            clientStatuses[c.client_id] = getClientStatus(evts || []);
+        } catch {
+            clientStatuses[c.client_id] = getClientStatus([]);
+        }
     }
+}
 
-    const filtered = filter
-        ? allClients.filter(c =>
-            (c.company || '').toLowerCase().includes(filter) ||
-            (c.email || '').toLowerCase().includes(filter) ||
-            (c.industry || '').toLowerCase().includes(filter))
-        : allClients;
+function initKpis() {
+    const kpis = [
+        { id: 'statTotal', filter: 'all' },
+        { id: 'statSent', filter: 'sent' },
+        { id: 'statActive', filter: 'active' },
+        { id: 'statProposal', filter: 'proposal' }
+    ];
+    setTimeout(() => {
+        kpis.forEach(k => {
+            const el = document.getElementById(k.id)?.closest('.stat-card');
+            if (!el) return;
+            el.style.cursor = 'pointer';
+            el.addEventListener('click', () => {
+                activeKpiFilter = k.filter;
+                document.querySelectorAll('.stat-card').forEach(c => c.style.borderColor = 'var(--brd)');
+                el.style.borderColor = 'var(--orange)';
+                renderClientTable(document.getElementById('searchInput').value.trim().toLowerCase(), false);
+            });
+            if (k.filter === 'all') el.style.borderColor = 'var(--orange)';
+        });
+    }, 100);
+}
 
-    document.getElementById('clientCount').textContent = `${allClients.length} clients in pipeline`;
-    document.getElementById('statTotal').textContent = allClients.length;
-
-    if (filtered.length === 0) {
-        tbody.innerHTML = `<tr><td colspan="5" class="tbl-empty">${filter ? 'No results found.' : 'No clients yet. Add a lead to get started.'}</td></tr>`;
-        document.getElementById('statSent').textContent = '0';
-        document.getElementById('statActive').textContent = '0';
-        document.getElementById('statProposal').textContent = '0';
-        return;
+async function renderClientTable(filter = '', forceRefresh = true) {
+    const tbody = document.getElementById('clientTableBody');
+    if (forceRefresh) {
+        try { allClients = await clients.list(); } catch (e) { console.warn('[Table] Could not refresh clients:', e); }
+        await loadClientStatuses();
     }
 
     let sentCount = 0, activeCount = 0, proposalCount = 0;
-    tbody.innerHTML = '';
+    allClients.forEach(c => {
+        const s = clientStatuses[c.client_id];
+        if (s) {
+            if (s.sent) sentCount++;
+            if (s.active) activeCount++;
+            if (s.proposal) proposalCount++;
+        }
+    });
 
+    document.getElementById('clientCount').textContent = `${allClients.length} clients in pipeline`;
+    document.getElementById('statTotal').textContent = allClients.length;
+    document.getElementById('statSent').textContent = sentCount;
+    document.getElementById('statActive').textContent = activeCount;
+    document.getElementById('statProposal').textContent = proposalCount;
+
+    let filtered = allClients;
+    if (filter) {
+        filtered = filtered.filter(c => 
+            (c.company || '').toLowerCase().includes(filter) ||
+            (c.email || '').toLowerCase().includes(filter) ||
+            (c.industry || '').toLowerCase().includes(filter)
+        );
+    }
+    
+    if (activeKpiFilter !== 'all') {
+        filtered = filtered.filter(c => {
+            const s = clientStatuses[c.client_id];
+            if (!s) return false;
+            if (activeKpiFilter === 'sent') return s.sent;
+            if (activeKpiFilter === 'active') return s.active;
+            if (activeKpiFilter === 'proposal') return s.proposal;
+            return true;
+        });
+    }
+
+    if (filtered.length === 0) {
+        tbody.innerHTML = `<tr><td colspan="5" class="tbl-empty">${filter || activeKpiFilter !== 'all' ? 'No results found.' : 'No clients yet. Add a lead to get started.'}</td></tr>`;
+        return;
+    }
+
+    tbody.innerHTML = '';
     for (const client of filtered) {
         const clientId = client.client_id || '';
-        let evts = [];
-        try { evts = await tracking.getEvents(clientId); } catch {}
-        const status = getClientStatus(evts);
-
-        if (status.sent)     sentCount++;
-        if (status.active)   activeCount++;
-        if (status.proposal) proposalCount++;
+        const status = clientStatuses[clientId] || getClientStatus([]);
 
         const tr = document.createElement('tr');
         tr.innerHTML = `
@@ -388,15 +440,8 @@ async function renderClientTable(filter = '') {
         tr.querySelector('.tbl-co-name').onclick   = () => openTracking(clientId);
     }
 
-    document.getElementById('statSent').textContent    = sentCount;
-    document.getElementById('statActive').textContent  = activeCount;
-    document.getElementById('statProposal').textContent = proposalCount;
-
-    // Animate table rows in with stagger
     const rows = tbody.querySelectorAll('tr');
-    rows.forEach((row, i) => {
-        setTimeout(() => row.classList.add('anim-in'), i * 50);
-    });
+    rows.forEach((row, i) => setTimeout(() => row.classList.add('anim-in'), i * 50));
 }
 
 function getClientStatus(events) {
