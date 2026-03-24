@@ -1,0 +1,38 @@
+[
+  {
+    "client_id": "FRIST001",
+    "company": "TestCompany",
+    "industry": "Tech",
+    "email": "t@t.com",
+    "notes": "",
+    "size": "",
+    "createdAt": "2026-03-20T10:22:47.550139"
+  },
+  {
+    "client_id": "FRIST002",
+    "company": "Test Client",
+    "industry": "Technology",
+    "email": "test@test.com",
+    "notes": "",
+    "size": "",
+    "createdAt": "2026-03-22T06:18:15.217898"
+  },
+  {
+    "client_id": "FRIST003",
+    "company": "ACME",
+    "industry": "MO",
+    "email": "vedant@fristinetech.com",
+    "notes": "",
+    "size": "",
+    "createdAt": "2026-03-23T10:02:54.468407+00:00"
+  },
+  {
+    "client_id": "FRIST004",
+    "company": "Tata Steel",
+    "industry": "Manufacturing",
+    "email": "gootynanditha@gmail.com",
+    "notes": "",
+    "size": "",
+    "createdAt": "2026-03-24T12:18:34.960475+00:00"
+  }
+]
