@@ -1216,41 +1216,36 @@ function showReqSummary() {
 }
 
 async function buildSolution() {
-    setStg(3, 'done'); setStg(4, 'act'); setPhase('Architecting Proposal…');
+    setStg(3, 'done'); setStg(4, 'act'); setPhase('Architecting CCMS Proposal…');
     const steps = [
-        { pct: 15, txt: 'Analysing discovery profile…' },
-        { pct: 35, txt: 'Mapping to Zoho modules…' },
-        { pct: 60, txt: 'Structuring implementation plan…' },
+        { pct: 15, txt: 'Analysing complaint management workflows…' },
+        { pct: 35, txt: 'Mapping to CCMS architecture & SAP…' },
+        { pct: 60, txt: 'Structuring implementation plan & CAPA…' },
         { pct: 80, txt: 'Finalising proposal…' },
     ];
     try {
         for (const s of steps) { showLdr(s.txt, s.pct); await sleep(600 + Math.random() * 300); }
         const res = await gem(
-            `DESIGN ZOHO SOLUTION FOR ${cli.company} BASED ON: ${JSON.stringify(reqs)}\nCRITICAL: RETURN ONLY RAW JSON. NO MARKDOWN. SCHEMA: {"primary_products":["..."],"implementation_phases":[{"name":"...","duration":"..."}],"team_structure":"...","monthly_cost":"...","workflow":[{"step":"1","name":"...","description":"..."}]}\n\nCRITICAL: YOU MUST INCLUDE THE FOLLOWING SPECIFIC WORKFLOWS IN THE "workflow" ARRAY (adapt specific names/steps to the client but keep the core meaning):\n1) Marketing Drip & Lead Scoring\n2) Multi-Channel Lead Routing\n3) S0-S4 Opportunity Pipeline\n4) QDE Onboarding & Locker Management System\n5) Mutual Fund Folios Integration`,
+            `DESIGN ZOHO SOLUTION FOR ${cli.company} BASED ON: ${JSON.stringify(reqs)}\nCRITICAL: RETURN ONLY RAW JSON. NO MARKDOWN. SCHEMA: {"primary_products":["..."],"implementation_phases":[{"name":"...","duration":"..."}],"team_structure":"...","monthly_cost":"...","workflow":[{"step":"1","name":"...","description":"..."}]}\n\nCRITICAL: YOU MUST INCLUDE THE FOLLOWING SPECIFIC WORKFLOWS IN THE "workflow" ARRAY (adapt specific names/steps to the client but keep the core meaning):\n1) Complaint Intake & Customer Integration\n2) PAG Tech Desk Screening & Assignment\n3) FRT Field Visit & Defect Investigation\n4) Sample Testing & QA Integration\n5) CIR Generation & DOP Approvals\n6) Material Return & SAP GRN Sync\n7) Financial Settlement & Credit Note\n8) CAPA Management & RCA\n9) Recovery & Liquidation Workflows`,
             2000, 0.4, true
         );
         sol = safeJ(res);
         if (!sol) throw new Error('Bad JSON from AI');
         hideLdr(); setStg(4, 'done');
-        // Skip video modal - go directly to proposal generation
         generateProposal();
     } catch (e) {
-        // Heuristic fallback
-        const products = [];
-        if (reqs.must_have?.some(m => /crm|sales|lead/i.test(m))) products.push('Zoho CRM');
-        if (reqs.must_have?.some(m => /account|book|invoice|tax/i.test(m))) products.push('Zoho Books');
-        if (reqs.must_have?.some(m => /support|desk|ticket/i.test(m))) products.push('Zoho Desk');
-        if (products.length === 0) products.push('Zoho One');
+        const products = ['Zoho CRM Plus', 'Zoho Desk', 'Zoho Survey', 'Zoho Analytics'];
         sol = {
             primary_products: products,
-            implementation_phases: [{ name: 'Requirement & FSD', duration: '2 Weeks' }, { name: 'Configuration', duration: '4 Weeks' }, { name: 'UAT & Training', duration: '2 Weeks' }],
-            team_structure: '1 Sr. BA, 1 Developer, 1 QA', monthly_cost: 'Based on User Count',
+            implementation_phases: [{ name: 'Requirement & FSD', duration: '2 Weeks' }, { name: 'Configuration', duration: '8 Weeks' }, { name: 'UAT & Training', duration: '4 Weeks' }],
+            team_structure: '1 Sr. BA, 2 Developers, 1 QA', monthly_cost: 'Based on User Count',
             workflow: [
-                { step: '1', name: 'Marketing Drip & Lead Scoring', description: 'Automated engagement and prioritization.' },
-                { step: '2', name: 'Multi-Channel Lead Routing', description: 'Assigning leads based on territory and skill.' },
-                { step: '3', name: 'S0-S4 Opportunity Pipeline', description: 'Standardized sales stages from qualification to closure.' },
-                { step: '4', name: 'QDE Onboarding & Locker Management', description: 'Quick Data Entry and secure document handling.' },
-                { step: '5', name: 'Mutual Fund Folios Integration', description: 'Syncing investment data with client profiles.' }
+                { step: '1', name: 'Complaint Intake', description: 'Digital capturing via Cares/Email/Manual with SAP validation.' },
+                { step: '2', name: 'PAG Tech Desk Screening', description: 'Validation of batch/invoice and defect routing.' },
+                { step: '3', name: 'FRT Field Investigation', description: 'On-site investigation and checklist completion.' },
+                { step: '4', name: 'CIR & DOP Approvals', description: 'Complaint Investigation Report generation and hierarchical approval.' },
+                { step: '5', name: 'Material Return & Settlement', description: 'SAP GRN sync, salvage, and credit/debit note generation.' },
+                { step: '6', name: 'CAPA Management', description: 'Root cause analysis and corrective/preventive tracking.' }
             ]
         };
         hideLdr(); setStg(4, 'done');
@@ -1259,24 +1254,13 @@ async function buildSolution() {
 }
 
 async function generateProposal() {
-    showLdr('Generating proposal…');
-    const fname   = `Zoho_Proposal_${(cli.company||'Client').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.html`;
+    showLdr('Generating CCMS proposal…');
+    const fname   = `Zoho_CCMS_Proposal_${(cli.company||'Client').replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.html`;
     const dateStr = new Date().toLocaleDateString('en-GB', { day:'2-digit', month:'short', year:'numeric' });
-    const mustHaves  = reqs.must_have || ['Zoho Implementation'];
-    const products   = reqs.zoho_products || sol?.primary_products || ['Zoho CRM'];
-    const userCount  = reqs.user_count || '—';
-    const industry   = reqs.industry || cli.industry || '—';
-    const integrations = reqs.integrations || [];
-    const workflows  = sol?.workflow || sol?.workflows || [
-        { step: '1', name: 'Marketing Drip & Lead Scoring', description: 'Automated engagement and prioritization.' },
-        { step: '2', name: 'Multi-Channel Lead Routing', description: 'Assigning leads based on territory and skill.' },
-        { step: '3', name: 'S0-S4 Opportunity Pipeline', description: 'Standardized sales stages from qualification to closure.' },
-        { step: '4', name: 'QDE Onboarding & Locker Management', description: 'Quick Data Entry and secure document handling.' },
-        { step: '5', name: 'Mutual Fund Folios Integration', description: 'Syncing investment data with client profiles.' }
-    ];
+    const products   = ['Zoho CRM Plus', 'Zoho Desk', 'Zoho Survey', 'Zoho Analytics'];
+    const industry   = reqs?.industry || cli.industry || 'Manufacturing';
+    const workflows  = sol?.workflow || sol?.workflows || [];
 
-    const scopeRows = mustHaves.map(m => `<tr><td>${m}</td><td><span class="badge-config">Configuration</span></td><td>Business Team</td><td><ul style="margin:0;padding-left:16px;font-size:12.5px;color:#4F6282"><li>Configure module per requirements</li><li>Workflows, validations, custom fields</li><li>Role-based access and reporting</li></ul></td></tr>`).join('');
-    const intgRows   = integrations.map(i => `<tr><td>${i}</td><td><span class="badge-custom">Customization</span></td><td>IT / Admin</td><td><ul style="margin:0;padding-left:16px;font-size:12.5px;color:#4F6282"><li>Integrate ${i} with Zoho</li><li>Configure data sync</li><li>End-to-end testing</li></ul></td></tr>`).join('');
     const wfRows     = workflows.map(w => `<tr><td style="font-weight:700;color:#1A4FD6;text-align:center;width:40px">${w.step}</td><td style="font-weight:600">${w.name}</td><td style="color:#4F6282">${w.description}</td></tr>`).join('');
 
     const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><title>Zoho Proposal — ${cli.company}</title>
@@ -1307,13 +1291,11 @@ th{padding:12px 14px;text-align:left;font-size:11px;font-weight:700;color:rgba(2
 td{padding:12px 14px;border-bottom:1px solid #E8EFF8;vertical-align:top}
 tr:last-child td{border-bottom:none}
 tr:nth-child(even) td{background:#FAFBFD}
-.badge-config{background:#EEF4FF;color:#1A4FD6;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
-.badge-custom{background:#FFF3E0;color:#E65100;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
-.badge-tm{background:#E8F5E9;color:#2E7D32;font-size:11px;font-weight:600;padding:3px 10px;border-radius:20px}
+.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
+.badge-config{background:#EEF4FF;color:#1A4FD6}
+.badge-tm{background:#FFF3E0;color:#E65100}
 .about-box{background:linear-gradient(135deg,#0B1120,#132040);border-radius:14px;padding:28px 32px;margin-bottom:20px}
 .about-box p{color:rgba(255,255,255,.7);margin-bottom:0}
-.awards{display:flex;gap:12px;flex-wrap:wrap;margin:14px 0}
-.award{background:#1A4FD6;color:#fff;font-size:12px;font-weight:600;padding:7px 14px;border-radius:10px}
 .clients-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
 .client-tag{background:#EEF4FF;color:#1A4FD6;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid #C8DAFF}
 ul.bullets{padding-left:20px}
@@ -1326,19 +1308,18 @@ ul.bullets li{font-size:13.5px;color:#4F6282;margin-bottom:8px}
 .footer-logo{display:flex;align-items:center;gap:8px}
 .footer-logo-box{width:28px;height:28px;background:#1A4FD6;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff}
 .footer-brand{font-size:13px;font-weight:600;color:rgba(255,255,255,.65)}
-.footer-conf{color:rgba(255,255,255,.3);font-size:12px}
-.editable-price{cursor:pointer;border-bottom:1px dashed #A0AEC0;font-weight:700;color:#1A4FD6;transition:all .2s}
 .editable-price:focus{background:#EEF4FF;outline:none}
+.editable-price{cursor:pointer;border-bottom:1px dashed #A0AEC0;font-weight:700;color:#1A4FD6;transition:all .2s}
 </style></head><body><div class="page">
 <div class="cover">
   <div class="cover-logo"><div class="cover-logo-box">F</div><div class="cover-logo-name">FRISTINE INFOTECH</div></div>
-  <h1>Zoho Implementation Proposal For</h1>
-  <div class="client-name">${cli.company}</div>
+  <h1>Zoho Implementation Proposal For CCMS</h1>
+  <div class="client-name">${cli.company || 'Client'}</div>
   <div class="subtitle">${industry} · Prepared by Fristine Infotech Presales Team</div>
   <div class="cover-hero"><svg viewBox="0 0 120 60" width="120" height="60" fill="none"><rect x="10" y="20" width="20" height="30" rx="3" fill="#C8DAFF"/><rect x="35" y="10" width="20" height="40" rx="3" fill="#1A4FD6"/><rect x="60" y="25" width="20" height="25" rx="3" fill="#C8DAFF"/><path d="M90 15l10 20H80z" fill="#1A4FD6" opacity=".3"/><circle cx="95" cy="15" r="5" fill="#1A4FD6"/></svg></div>
   <div class="meta-grid">
     <div class="meta-item"><label>Date</label><span>${dateStr}</span></div>
-    <div class="meta-item"><label>Prepared For</label><span>${cli.company}</span></div>
+    <div class="meta-item"><label>Prepared For</label><span>${cli.company || 'Client'}</span></div>
     <div class="meta-item"><label>Prepared By</label><span>Fristine Infotech Presales</span></div>
     <div class="meta-item"><label>Contact</label><span>presales@fristinetech.com</span></div>
   </div>
@@ -1348,93 +1329,94 @@ ul.bullets li{font-size:13.5px;color:#4F6282;margin-bottom:8px}
   <div class="sec-head"><div class="sec-num">1</div><div class="sec-title">About Fristine Infotech</div></div>
   <div class="about-box"><p>Fristine Infotech is India's leading Premium Zoho Partner helping clients across markets, industries & geographies solve complex business problems through bespoke Zoho implementations.</p></div>
   <p>Over <strong>10 years</strong> and <strong>200+ implementations</strong> across Marketing, Sales, Operations, Finance, and Support.</p>
-  <div class="awards"><div class="award"><svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M8 1l2 4h4l-3 3 1 4-4-2-4 2 1-4-3-3h4z" stroke="#FFD700" stroke-width="1.2" fill="#FFD700"/></svg> Zoho Creator Partner Award 2021 — Innovator of the Year</div><div class="award"><svg viewBox="0 0 16 16" width="14" height="14" fill="none"><circle cx="8" cy="8" r="6" stroke="#fff" stroke-width="1.5"/><path d="M3 8h10M8 3c-2 2-2 10 0 10M8 3c2 2 2 10 0 10" stroke="#fff" stroke-width="1.2"/></svg> Regional Champion — Australia & New Zealand</div></div>
-  <p style="font-weight:600;color:#1A2540;margin-bottom:8px">Our Clients:</p>
-  <div class="clients-grid">${['eBay','Pepperfry','Edelweiss','YES Securities','NPCI','Jio','Suzlon','Mercedes-Benz','Samsonite','TATA MD','CARE Ratings','CRISIL','TeamLease','Transasia'].map(c=>`<span class="client-tag">${c}</span>`).join('')}</div>
+  <p style="font-weight:600;color:#1A2540;margin-bottom:8px;margin-top:16px">Our Key Clients:</p>
+  <div class="clients-grid">${['eBay','Pepperfry','Edelweiss','YES Securities','NPCI','Jio','Suzlon','Mercedes-Benz','TATA MD','CARE Ratings'].map(c=>`<span class="client-tag">${c}</span>`).join('')}</div>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">2</div><div class="sec-title">Proposal & Scope of Work</div></div>
-  <p><strong>${cli.company}</strong> is looking to implement <strong>${products.join(', ')}</strong> to digitalise and optimise its business processes.</p>
-  ${products.map(prod=>`<p style="font-weight:700;color:#0B1120;font-size:14px;margin-top:20px;margin-bottom:10px">${prod}</p><table><thead><tr><th>Requirement</th><th>Status</th><th>User Persona</th><th>Fristine Remark</th></tr></thead><tbody>${scopeRows}</tbody></table>`).join('')}
-  ${intgRows?`<p style="font-weight:700;color:#0B1120;font-size:14px;margin-top:20px;margin-bottom:10px">Integrations</p><table><thead><tr><th>Requirement</th><th>Status</th><th>User Persona</th><th>Fristine Remark</th></tr></thead><tbody>${intgRows}</tbody></table>`:''}
-  <p style="font-weight:700;color:#0B1120;font-size:14px;margin-top:20px;margin-bottom:10px">Training & UAT</p>
-  <table><thead><tr><th>Requirement</th><th>Status</th><th>User Persona</th><th>Fristine Remark</th></tr></thead><tbody><tr><td>User Training, Help Document & UAT</td><td><span class="badge-tm">Time & Material</span></td><td>IT / Admin Team</td><td><ul style="margin:0;padding-left:16px;font-size:12.5px;color:#4F6282"><li>UAT</li><li>User Training</li><li>Help Documentation</li></ul></td></tr></tbody></table>
-</div>
-
-<div class="section">
-  <div class="sec-head"><div class="sec-num" style="background:linear-gradient(135deg,#1A4FD6,#3B82F6)">W</div><div class="sec-title" style="color:#0B1120">Implementation Workflow</div></div>
-  <p style="margin-bottom:20px">The following workflow outlines how Fristine Infotech will implement your requirements step-by-step:</p>
-  <div style="display:flex;flex-direction:column;gap:0;margin:20px 0">
-    ${workflows.map((w, i) => `
-    <div style="display:flex;align-items:stretch;gap:16px;position:relative">
-      <div style="width:40px;display:flex;flex-direction:column;align-items:center;flex-shrink:0">
-        <div style="width:32px;height:32px;border-radius:50%;background:linear-gradient(135deg,#1A4FD6,#3B82F6);color:#fff;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;box-shadow:0 2px 8px rgba(26,79,214,.3)">${w.step}</div>
-        ${i < workflows.length - 1 ? '<div style="flex:1;width:2px;background:linear-gradient(180deg,#1A4FD6,#C8DAFF);min-height:16px"></div>' : ''}
-      </div>
-      <div style="flex:1;background:#F8FBFF;border:1px solid #E0EAFF;border-radius:10px;padding:14px 18px;margin-bottom:12px">
-        <div style="font-weight:700;font-size:14px;color:#1A4FD6;margin-bottom:4px">${w.name}</div>
-        <div style="font-size:12.5px;color:#4F6282;line-height:1.6">${w.description}</div>
-      </div>
-    </div>`).join('')}
-  </div>
-  <table style="margin-top:16px"><thead style="background:#1A4FD6"><tr><th style="color:#fff;text-align:center">Step</th><th style="color:#fff">Workflow</th><th style="color:#fff">Description</th></tr></thead><tbody>${wfRows}</tbody></table>
-</div>
-
-<div class="section">
-  <div class="sec-head"><div class="sec-num">3</div><div class="sec-title">Project Team</div></div>
-  <table><thead><tr><th>#</th><th>Role</th><th>Description</th></tr></thead><tbody>
-    <tr><td>1</td><td><strong>CTO</strong></td><td>Architecture and risk mitigation accountability.</td></tr>
-    <tr><td>2</td><td><strong>Project Manager</strong></td><td>Overall project outcomes and day-to-day progress.</td></tr>
-    <tr><td>3</td><td><strong>Sr Business Analyst</strong></td><td>Functional requirements, user training, and backlog management.</td></tr>
-    <tr><td>4</td><td><strong>Jr Business Analyst</strong></td><td>Documentation assistance and requirements support.</td></tr>
-    <tr><td>5</td><td><strong>Sr Developer</strong></td><td>Quality development and implementation tasks.</td></tr>
-    <tr><td>6</td><td><strong>QA / Tester</strong></td><td>Test planning, execution, and quality assurance.</td></tr>
-  </tbody></table>
-</div>
-
-<div class="section">
-  <div class="sec-head"><div class="sec-num">4</div><div class="sec-title">Escalation Process</div></div>
-  <table><thead><tr><th>#</th><th>Escalation Level</th><th>Response Time</th></tr></thead><tbody>
-    <tr><td>1</td><td>Level 1 — Sr Business Analyst</td><td>4 Hours</td></tr>
-    <tr><td>2</td><td>Level 2 — CTO</td><td>1 Business Day</td></tr>
-    <tr><td>3</td><td>Level 3 — CEO</td><td>3 Business Days</td></tr>
-  </tbody></table>
-</div>
-
-<div class="section">
-  <div class="sec-head"><div class="sec-num">5</div><div class="sec-title">Commercials</div></div>
-  <p style="font-weight:700;color:#0B1120;margin-bottom:10px">Software License</p>
-  <table><thead><tr><th>#</th><th>Product</th><th>Users</th><th>Billing</th><th>Amount (INR)</th></tr></thead><tbody>
-    ${products.map((p,i)=>`<tr><td>${i+1}</td><td>${p}</td><td>${userCount}</td><td>Annual</td><td contenteditable="true" class="editable-price">₹ (To be quoted)</td></tr>`).join('')}
-  </tbody></table>
-  <p style="font-size:12px;color:#7A91B3;margin-bottom:20px">Pricing exclusive of GST</p>
-  <p style="font-weight:700;color:#0B1120;margin-bottom:10px">Implementation</p>
-  <table><thead><tr><th>#</th><th>Particulars</th><th>Type</th><th>Est. Hours</th><th>Amount (INR)</th></tr></thead><tbody>
-    <tr><td>1</td><td>Requirement Gathering & FSD</td><td><span class="badge-config">Project-based</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (To be quoted)</td></tr>
-    <tr><td>2</td><td>${products.join(' & ')} Implementation</td><td><span class="badge-config">Project-based</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (To be quoted)</td></tr>
-    <tr><td>3</td><td>Data Migration</td><td><span class="badge-tm">T&M</span></td><td>4 days</td><td contenteditable="true" class="editable-price">₹ (To be quoted)</td></tr>
-    <tr><td>4</td><td>30-day Hypercare</td><td><span class="badge-config">Project-based</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (To be quoted)</td></tr>
-    <tr style="background:#EEF4FF"><td colspan="4" style="font-weight:700;color:#1A4FD6;font-size:14px">Total [Excl. GST]</td><td contenteditable="true" class="editable-price">₹ (To be quoted)</td></tr>
-  </tbody></table>
-</div>
-
-<div class="section">
-  <div class="sec-head"><div class="sec-num">6</div><div class="sec-title">Constraints & Assumptions</div></div>
+  <div class="sec-head"><div class="sec-num">2</div><div class="sec-title">Executive Summary</div></div>
+  <p><strong>${cli.company || 'Client'}</strong> intends to implement a unified Customer Complaint Management System (CCMS) on Zoho CRM Plus to digitise and streamline the end-to-end complaint lifecycle, starting from complaint intake (via Cares / Email / Manual) through investigation, approvals, settlement, returns, financial closure, and final customer communication.</p>
+  <p><strong>FRD/Business Requirements at a glance:</strong></p>
   <ul class="bullets">
-    <li>Delivery dates may change based on stakeholder responsiveness.</li>
-    <li>Third-party integrations depend on external API capabilities.</li>
-    <li>Zoho plan limits on records/storage may require add-ons.</li>
-    <li>Final scope confirmed through FSD sign-off.</li>
-    <li>Clean, validated data to be provided by ${cli.company} for migration.</li>
+    <li>Digital complaint intake with invoice/batch/quantity selection and evidence uploads.</li>
+    <li>Routing & ownership starting with PAG Tech Desk screening, followed by FRT investigation.</li>
+    <li>Parallel CAPA initiation with root cause analysis, countermeasures, and effectiveness tracking.</li>
+    <li>CIR (Complaint Investigation Report) creation with Delegation of Power (DOP) approvals.</li>
+    <li>Settlement pathways including No Claim, Salvage, and Return & Take Back.</li>
+    <li>SAP integration for invoice/batch data, GRN, and credit/debit memo creation.</li>
+    <li>Dashboards & analytics for operational, financial, quality and SLA metrics.</li>
   </ul>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">7</div><div class="sec-title">Acceptance</div></div>
+  <div class="sec-head"><div class="sec-num" style="background:linear-gradient(135deg,#1A4FD6,#3B82F6)">W</div><div class="sec-title" style="color:#0B1120">Implementation Workflow</div></div>
+  <p style="margin-bottom:20px">The following workflow outlines how Fristine Infotech will implement the CCMS step-by-step:</p>
+  <table style="margin-top:16px"><thead style="background:#1A4FD6"><tr><th style="color:#fff;text-align:center">Step</th><th style="color:#fff">Workflow</th><th style="color:#fff">Description</th></tr></thead><tbody>${wfRows}</tbody></table>
+</div>
+
+<div class="section">
+  <div class="sec-head"><div class="sec-num">3</div><div class="sec-title">Detailed Scope Of Work</div></div>
+  <p style="font-weight:700;color:#0B1120;font-size:14px;margin-bottom:10px">Zoho CRM & Desk Setup</p>
+  <table><thead><tr><th>Requirement</th><th>Status</th><th>Persona</th></tr></thead><tbody>
+    <tr><td>Organisation Setup & Roles</td><td><span class="badge badge-config">Config</span></td><td>Admin</td></tr>
+    <tr><td>Complaint Intake via TSL Cares</td><td><span class="badge badge-tm">Custom</span></td><td>Admin</td></tr>
+    <tr><td>FRT Investigation Management</td><td><span class="badge badge-config">Config</span></td><td>Admin / Service</td></tr>
+    <tr><td>CIR Approval Workflows (DOP)</td><td><span class="badge badge-config">Config</span></td><td>Admin / Service</td></tr>
+    <tr><td>Settlement & Salvage Computation</td><td><span class="badge badge-config">Config</span></td><td>Finance</td></tr>
+    <tr><td>Material Return & Logistics</td><td><span class="badge badge-config">Config</span></td><td>Logistics</td></tr>
+    <tr><td>CAPA & Recovery Management</td><td><span class="badge badge-config">Config</span></td><td>QA / Service</td></tr>
+    <tr><td>Zoho Desk SLA Escalations</td><td><span class="badge badge-config">Config</span></td><td>IT / Admin</td></tr>
+  </tbody></table>
+  
+  <p style="font-weight:700;color:#0B1120;font-size:14px;margin-top:20px;margin-bottom:10px">Integrations & Analytics</p>
+  <table><thead><tr><th>Requirement</th><th>Status</th><th>Persona</th></tr></thead><tbody>
+    <tr><td>SAP S4 Hana APIs (Invoice, GRN, Credit)</td><td><span class="badge badge-tm">Custom</span></td><td>IT / Admin</td></tr>
+    <tr><td>IPCA APIs (Investigation Reports)</td><td><span class="badge badge-tm">Custom</span></td><td>IT / Admin</td></tr>
+    <tr><td>SMS & WhatsApp Gateway</td><td><span class="badge badge-tm">Custom</span></td><td>IT / Admin</td></tr>
+    <tr><td>Operational & Quality Dashboards</td><td><span class="badge badge-config">Config</span></td><td>MIS Team</td></tr>
+    <tr><td>Data Migration & UAT/Training</td><td><span class="badge badge-tm">T&M</span></td><td>IT / Admin</td></tr>
+  </tbody></table>
+</div>
+
+<div class="section">
+  <div class="sec-head"><div class="sec-num">4</div><div class="sec-title">Project Plan & Governance</div></div>
+  <ul class="bullets">
+    <li><strong>Timeline:</strong> Delivery within 140 Working days / 6.5 Calendar Months.</li>
+    <li><strong>Delivery Lead:</strong> Accountable for the Architecture Plan and Risk Mitigation.</li>
+    <li><strong>Project Manager:</strong> Day-to-day control and management of progress.</li>
+    <li><strong>Escalation Path:</strong> Level 1 (Delivery Lead, 6 Hours) → Level 2 (Operation Manager, 2 Days) → Level 3 (CTO, 4 Days).</li>
+    <li><strong>Change Requests:</strong> Reviewed through a Change Advisory Board (CAB). No obligation to proceed without written approval.</li>
+  </ul>
+</div>
+
+<div class="section">
+  <div class="sec-head"><div class="sec-num">5</div><div class="sec-title">Commercials</div></div>
+  <p style="font-weight:700;color:#0B1120;margin-bottom:10px">Implementation Efforts</p>
+  <table><thead><tr><th>#</th><th>Particulars</th><th>Type</th><th>Est.</th><th>Amount (INR)</th></tr></thead><tbody>
+    <tr><td>1</td><td>Requirement Workshop & FSD</td><td><span class="badge badge-tm">T&M</span></td><td>30 Days</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
+    <tr><td>2</td><td>CRM & Desk Implementation</td><td><span class="badge badge-config">Project</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
+    <tr><td>3</td><td>SAP & IPCA Integrations</td><td><span class="badge badge-config">Project</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
+    <tr><td>4</td><td>Data Migration & Training</td><td><span class="badge badge-tm">T&M</span></td><td>22 Days</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
+    <tr><td>5</td><td>30-Day Hyper-care</td><td><span class="badge badge-config">Project</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (Included)</td></tr>
+    <tr style="background:#EEF4FF"><td colspan="4" style="font-weight:700;color:#1A4FD6;font-size:14px">Implementation Subtotal</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
+  </tbody></table>
+  
+  <p style="font-weight:700;color:#0B1120;margin-top:20px;margin-bottom:10px">Run Model (Platinum Plan For 12 Months)</p>
+  <ul class="bullets" style="margin-bottom:16px">
+    <li>Included Support & Bug-Fix Hours: 80 hrs/mo</li>
+    <li>Coverage Window: 16 × 6 (Mon–Sat)</li>
+    <li>SLA First Response: 1 business hr</li>
+    <li>Scope: L1–L3 support, bug fixes, config, performance tuning</li>
+  </ul>
+  <table style="width:50%"><tbody><tr style="background:#0B1120;color:#fff"><td colspan="3" style="font-weight:700;padding:10px">Monthly Run Plan Fee</td><td contenteditable="true" class="editable-price" style="color:#FFF;padding:10px">₹ (Quoted)</td></tr></tbody></table>
+  <p style="font-size:11px;color:#7A91B3">Taxes: The above pricing is exclusive of GST. Zoho License costs are not included and must be paid in full upfront.</p>
+</div>
+
+<div class="section">
+  <div class="sec-head"><div class="sec-num">6</div><div class="sec-title">Acceptance</div></div>
   <div class="acceptance-grid">
     <div class="acceptance-col"><label>For Fristine Infotech Pvt Ltd</label><div class="sign-line"></div><div class="sign-field">Signature:</div><div class="sign-line"></div><div class="sign-field">Name:</div><div class="sign-line"></div><div class="sign-field">Date:</div></div>
-    <div class="acceptance-col"><label>For ${cli.company}</label><div class="sign-line"></div><div class="sign-field">Signature:</div><div class="sign-line"></div><div class="sign-field">Name:</div><div class="sign-line"></div><div class="sign-field">Date:</div></div>
+    <div class="acceptance-col"><label>For ${cli.company || 'Client'}</label><div class="sign-line"></div><div class="sign-field">Signature:</div><div class="sign-line"></div><div class="sign-field">Name:</div><div class="sign-line"></div><div class="sign-field">Date:</div></div>
   </div>
 </div>
 
@@ -1445,7 +1427,7 @@ ul.bullets li{font-size:13.5px;color:#4F6282;margin-bottom:8px}
 </div></body></html>`;
 
     if (activeClientId) {
-        try { await proposals.save(activeClientId, html, `Proposal — ${cli.company}`); } catch {}
+        try { await proposals.save(activeClientId, html, `CCMS Proposal — ${cli.company||'Client'}`); } catch {}
         try { await tracking.logEvent(activeClientId, 'proposal_generated'); } catch {}
         try { await tracking.logEvent(activeClientId, 'proposal_submitted'); } catch {}
     }
@@ -1457,9 +1439,9 @@ ul.bullets li{font-size:13.5px;color:#4F6282;margin-bottom:8px}
     addAg(`
         <div class="reqcard-box" style="text-align:center;padding:28px 20px;">
             <div style="margin-bottom:14px"><svg viewBox="0 0 48 48" width="48" height="48" fill="none"><circle cx="24" cy="24" r="20" stroke="var(--green)" stroke-width="2.5"/><path d="M15 24l6 6 12-12" stroke="var(--green)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg></div>
-            <div style="font-size:17px;font-weight:700;margin-bottom:10px">Your Zoho Proposal is Generated!</div>
+            <div style="font-size:17px;font-weight:700;margin-bottom:10px">CCMS Proposal is Generated!</div>
             <div style="font-size:13px;color:var(--sub);line-height:1.75;max-width:400px;margin:0 auto">
-                Your requirements have been successfully mapped and your strategic Zoho roadmap has been compiled.<br/><br/>
+                Your requirements have been successfully mapped to the CCMS Reference Architecture.<br/><br/>
                 <strong>A Fristine presales specialist is reviewing your proposal and will share the detailed documents with you shortly.</strong>
             </div>
         </div>`, { noEscape: true });
