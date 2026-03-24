@@ -6,7 +6,7 @@ import { saveAs } from 'file-saver';
 import gsap from 'gsap';
 
 /* ══ CONFIG ══ */
-const DEPLOY_URL = (import.meta.env.VITE_DEPLOY_URL || window.location.origin).replace(/\/$/, '');
+const DEPLOY_URL = (window.location.origin + window.location.pathname).replace(/\/index\.html$/, '').replace(/\/$/, '');
 
 /* ══ STATE ══ */
 let allClients = [];
