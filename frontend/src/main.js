@@ -938,7 +938,13 @@ document.getElementById('fileIn').onchange = async (e) => {
         console.error('[Document Analysis Error]', err);
         removeTypingIndicator();
         hideLdr();
-        addAg(`I encountered an issue reading or analysing your file <strong>${f.name}</strong>. Could you briefly summarise the key requirements it covers?`);
+        const errDetails = err.message || (err.data && err.data.detail) || "Unknown Error";
+        const isAI = errDetails.includes('API') || errDetails.includes('Resource') || errDetails.includes('429');
+        if (isAI) {
+           addAg(`I was able to read your document <strong>${f.name}</strong> successfully, but I hit a temporary AI rate limit while analyzing it. <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span><br/><br/>Could you wait a minute and try again? Or describe what the document covers?`, { noEscape: true });
+        } else {
+           addAg(`I encountered a technical issue reading the file <strong>${f.name}</strong>. <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span><br/><br/>Could you briefly summarise its key requirements?`, { noEscape: true });
+        }
     }
     e.target.value = '';
 };
