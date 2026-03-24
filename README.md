@@ -182,29 +182,32 @@ This automates steps 2-3 above.
 
 ## Production Deployment
 
-### Backend (any Python host — Railway, Render, Fly.io, VPS)
+### Backend Deployment (Render)
 
-```bash
-cd backend
-pip install -r requirements.txt
-```
+This repository includes a `render.yaml` file for automated deployment to [Render](https://render.com/).
+
+**Automated Deployment (Recommended):**
+1. Click **New +** on Render and select **Blueprint**.
+2. Connect this repository. Render will automatically provision the Python web service on the Free tier.
+3. Add your environment variables in the Render dashboard.
+
+**Manual Deployment (Web Service):**
+If creating a "Web Service" manually on Render (or another cloud host), configure the following:
+- **Language**: `Python 3`
+- **Root Directory**: `(leave blank)`
+- **Build Command**: `cd backend && pip install -r requirements.txt`
+- **Start Command**: `cd backend && uvicorn main:app --host 0.0.0.0 --port $PORT`
 
 Set environment variables:
 
 ```env
-PORT=3001
+PORT=10000
 ENV=production
 GEMINI_API_KEY=your_key
 FRONTEND_URL=https://your-frontend-domain.com
 EMAIL_USER=your_gmail@gmail.com
 EMAIL_PASS=your_app_password
 EMAIL_FROM=noreply@fristinetech.com
-```
-
-Run with:
-
-```bash
-uvicorn main:app --host 0.0.0.0 --port 3001
 ```
 
 For process management, use `gunicorn`:
