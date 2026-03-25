@@ -1155,9 +1155,13 @@ function showReqSummary() {
         ${(reqs.success_metrics||[]).length ? `<div class="reqs-section"><div class="reqs-label">Success Metrics</div><ul class="reqs-list">${makeList(reqs.success_metrics)}</ul></div>` : ''}
         ${productChips ? `<div class="reqs-section"><div class="reqs-label">Recommended Zoho Products</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">${productChips}</div></div>` : ''}
         <div class="reqs-actions" style="display:flex;flex-wrap:wrap;gap:10px;padding:16px 18px;background:var(--bg);border-top:1px solid var(--brd)">
-          <button class="reqs-btn-confirm" id="confirmProposal" style="flex:1;min-width:180px;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;font-size:13px;border-radius:10px">
+          <button class="reqs-btn-confirm" id="confirmProposal" style="flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;font-size:13px;border-radius:10px">
             <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M4 8l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Create Proposal
+          </button>
+          <button class="reqs-btn-clarify" id="summaryBtn" style="display:flex;align-items:center;gap:6px;padding:12px 16px;border-radius:10px;background:#f3f4f6;color:#374151">
+            <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M3 3h10v10H3V3z" stroke="currentColor" stroke-width="1.5"/><path d="M6 6h4M6 8h4M6 10h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
+            Summary
           </button>
           <button class="reqs-btn-clarify" id="clarifyBtn" style="display:flex;align-items:center;gap:6px;padding:12px 16px;border-radius:10px">
             <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
@@ -1174,6 +1178,9 @@ function showReqSummary() {
     addAg(html, { noEscape: true });
     setTimeout(() => {
         document.getElementById('confirmProposal')?.addEventListener('click', buildSolution);
+        document.getElementById('summaryBtn')?.addEventListener('click', () => {
+            document.dispatchEvent(new CustomEvent('generateBRD'));
+        });
         document.getElementById('clarifyBtn')?.addEventListener('click', () => {
             discoveryComplete = false;
             addAg("Of course! What changes would you like? I'll update the requirements accordingly.");
