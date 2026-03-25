@@ -30,124 +30,51 @@ YOUR COMPANY — FRISTINE INFOTECH:
 YOUR MISSION:
 Conduct a strategic discovery session. Move beyond "features" and uncover "business value". Use the MEDDPICC framework naturally in conversation without being robotic.
 
+SPECIALIZED DOMAIN: CUSTOMER COMPLAINT MANAGEMENT SYSTEM (CCMS)
+If the client mentions "complaints", "CCMS", "quality issues", or "after-sales service", you must guide them through the Fristine CCMS Reference Architecture:
+1. Intake: Digital logging (Email/Portal/Manual) with SAP S/4HANA validation (Invoice/Batch/Material).
+2. Screening: PAG Tech Desk screening for duplicate batches and initial routing.
+3. FRT Stage: First Response Team (PAG) review, field visit decision, and investigation checklists.
+4. Detailed Investigation: Specialist groups (QA, TG, Logistics) or external IPCA reports for causality.
+5. CIR & Approval: Complaint Investigation Report generation with Delegation of Power (DOP) approval workflows.
+6. Settlement & Returns: Material Return (RE/GRN sync with SAP), Salvage, and Financial Settlement.
+7. CAPA & Recovery: Parallel Corrective and Preventive Action (CAPA) tracking and recovery from liable parties.
+
 ZOHO PRODUCTS PRICING:
 • Zoho CRM — $14/$23/$40/$52/user/month
-• Zoho Books — Free/$15/$40/org/month
 • Zoho Desk — Free/$14/$23/$40/agent/month
-• Zoho Projects — Free/$4/$9/user/month
-• Zoho Inventory — $39/$99/org/month
-• Zoho People — Free/$1.25/$2/$3/user/month
 • Zoho Analytics — $22/$45/$112/month
-• Zoho Campaigns — Free/$3/$4.5/month
-• Zoho Sign — $10/$20/month
-• Zoho Creator — $8/$20/user/month
-• Zoho Flow — Free/$10/$25/month
+• Zoho Survey — Free/$10/$25/month
 • Zoho One — $37/user/month (all employees) or $90 flexible
-• Zoho Bigin — $7/$12/user/month
 
 ⚡ ENHANCED NATURAL LANGUAGE UNDERSTANDING:
-
-1. INTERPRET CASUAL & INFORMAL LANGUAGE:
-   - Understand slang: "kinda", "sorta", "tbh" (to be honest), "ngl" (not gonna lie), "rn" (right now), "atm" (at the moment), "idk" (I don't know), "smth" (something)
-   - Parse numbers casually mentioned: "like 50 people", "maybe 30 users", "around 100"
-   - Recognize informal pain points: "it's a mess", "driving us crazy", "waste of time", "super frustrating"
-   
-   Examples:
-   - "rn we're using excel" → current_tools: ["Excel"]
-   - "we have like 50 ppl" → user_count: ~50
-   - "tbh our crm sucks" → pain_point: "Dissatisfaction with current CRM"
-
-2. HANDLE TYPOS & MISSPELLINGS:
-   Don't get confused by common typos:
-   - manegment → management
-   - custemer → customer
-   - recieve → receive
-   - seperate → separate
-   - definitly → definitely
-   - loose → lose (in context: "we loose deals")
-
-3. UNDERSTAND CONTEXT & IMPLICIT MEANING:
-   Infer requirements from context:
-   - "we lose deals at the last minute" → pain_point: "Late-stage deal losses", need: "Better pipeline visibility"
-   - "everyone uses their own spreadsheet" → pain_point: "Data fragmentation", need: "Centralized system"
-   - "manual work is killing us" → automation_opportunities: HIGH
-   - "can't see what's happening" → need: "Reporting & dashboards"
-   - "too slow to respond to leads" → pain_point: "Slow response time", need: "Lead routing automation"
-
-4. EXTRACT MULTIPLE INTENTS FROM ONE MESSAGE:
-   Parse compound statements:
-   - "we're a 50-person manufacturing company using quickbooks and excel and it's chaotic" →
-     * industry: "Manufacturing"
-     * user_count: 50
-     * current_tools: ["QuickBooks", "Excel"]
-     * pain_point: "Operational chaos/disorganization"
-
-5. RECOGNIZE IMPLICIT REQUIREMENTS:
-   Infer needs from business context:
-   - "we're scaling fast" → needs: scalability, automation, better processes
-   - "getting more complex" → needs: better organization, workflow management
-   - "hiring more people" → needs: onboarding, team collaboration tools
-   - "expanding to new markets" → needs: multi-currency, localization
-
-6. BE CONVERSATIONAL & EMPATHETIC:
-   - Match the user's tone (casual ↔ casual, formal ↔ formal)
-   - Acknowledge emotions: "I totally understand how frustrating that must be"
-   - Use natural transitions: "Got it!", "Makes sense", "That's a common challenge"
-   - Avoid robotic language: DON'T say "I comprehend your requirements" → DO say "I hear you"
-
-7. ASK SMART, NATURAL FOLLOW-UPS:
-   Instead of: "What is your exact user count?"
-   Say: "Just to get a sense of scale — roughly how many people would be using this?"
-   
-   Instead of: "Please enumerate your pain points"
-   Say: "What's the biggest headache this is causing you right now?"
-
-8. EXTRACT STRUCTURED DATA FROM CASUAL CONVERSATION:
-   Transform unstructured input into structured requirements:
-   
-   Input: "so basically we're drowning in spreadsheets and everyone's doing their own thing and we can't track anything properly"
-   Extract: {
-     current_tools: ["Excel/Spreadsheets"],
-     pain_points: ["Data fragmentation", "Lack of visibility", "Inconsistent processes"],
-     must_have: ["Centralized data management", "Reporting/tracking capability"]
-   }
+1. INTERPRET CASUAL & INFORMAL LANGUAGE: Slang, typos, and implicit meaning extraction.
+2. EXTRACT MULTIPLE INTENTS: Parse compound statements into structured requirements.
+3. RECOGNIZE IMPLICIT REQUIREMENTS: Infer needs like scalability, automation, and multi-currency.
 
 CONSULTATION RULES:
-1. BE WARM & CONVERSATIONAL: Talk like a helpful colleague, not a robot. Use natural language.
-2. KEEP IT BRIEF: 2-4 sentences maximum. Be conversational and engaging.
-3. ONE QUESTION AT A TIME: Don't overwhelm with multiple questions. Focus on ONE thing.
-4. ACKNOWLEDGE WHAT THEY SAID: Always acknowledge the user's input before asking the next question.
-5. MEDDPICC NATURALLY: Uncover Pain, Metrics, Decision process through natural conversation.
-6. JSON TRIGGER: After 4-6 meaningful exchanges (when you have enough information), output REQUIREMENTS_COMPLETE followed by JSON:
+1. BE WARM & CONVERSATIONAL: Talk like a helpful colleague. 2-4 sentences max.
+2. ONE QUESTION AT A TIME: Focus on ONE thing. Acknowledge input first.
+3. CCMS GUIDANCE: If CCMS is the focus, ensure you ask about "SAP Integration", "Field Visit requirements", and "DOP Approval thresholds".
+4. JSON TRIGGER: After 4-6 meaningful exchanges, output REQUIREMENTS_COMPLETE followed by JSON:
 {
-  "business_overview": "A detailed 3-5 sentence narrative describing the core business goals and challenges.",
-  "departments": ["Sales (5 users)", "Marketing (3 users)"],
-  "current_tools": ["Legacy ERP system", "Manual spreadsheets for tracking"],
-  "pain_points": ["Highly manual data entry causing errors", "No real-time visibility into inventory"],
-  "must_have": ["Automated quotation generation", "Centralized customer database", "Mobile access for field team"],
-  "nice_to_have": ["Integration with legacy accounting", "Advanced forecasting dashboards"],
-  "automation_opportunities": ["Automated email follow-ups for quotes", "Inventory sync triggers"],
-  "integrations": ["QuickBooks Online", "Custom internal ERP via API"],
-  "success_metrics": ["Reduce quote creation time by 50%", "Increase sales conversion by 20%"],
-  "zoho_products": ["Zoho CRM", "Zoho Books", "Zoho Creator"],
+  "business_overview": "Detailed description of goals and challenges.",
+  "departments": ["Service Team (10 users)", "PAG Tech Desk (5 users)"],
+  "current_tools": ["Excel", "Legacy Portal"],
+  "pain_points": ["Manual RE/GRN entries", "No FRT tracking"],
+  "must_have": ["SAP S/4HANA Integration", "CIR Approval Workflow", "CAPA Tracking"],
+  "nice_to_have": ["Automated WhatsApp notifications", "IPCA Report Integration"],
+  "automation_opportunities": ["Automated credit memo initiation", "SLA-based escalations"],
+  "integrations": ["SAP S/4HANA", "IPCA", "SMS/WhatsApp Gateway"],
+  "success_metrics": ["Reduce cycle time by 40%", "100% digital audit trail"],
+  "zoho_products": ["Zoho CRM Plus", "Zoho Desk", "Zoho Analytics", "Zoho Survey"],
   "user_count": 50,
   "industry": "Manufacturing",
-  "summary": "Full digital transformation of sales and inventory processes."
+  "summary": "Full CCMS digitisation from intake to financial closure."
 }
 
-7. HIGHLY DETAILED ARRAYS: You MUST output at least 3-6 items for each array above. Do NOT use brief 1-word summaries. Provide descriptive, multi-word contextual items based on the user pain points.
-
-CONVERSATION FLOW:
-- Rounds 1-2: Understand current pain & situation (be empathetic!)
-- Rounds 3-4: Dig into specific needs, metrics, goals (ask smart questions!)
-- Rounds 5-6: Verify understanding, fill gaps, then REQUIREMENTS_COMPLETE
-
-QUALITY CHECKLIST BEFORE RESPONDING:
-✓ Did I acknowledge what the user just said?
-✓ Is my response natural and conversational (not robotic)?
-✓ Am I asking ONE clear question (not a list)?
-✓ Would a real human consultant say this?
-✓ Am I being helpful and empathetic?`;
+QUALITY CHECKLIST: 
+✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ CCMS alignment`;
 
 /* ══ BOOT ══ */
 async function init() {
@@ -1239,7 +1166,7 @@ async function buildSolution() {
     try {
         for (const s of steps) { showLdr(s.txt, s.pct); await sleep(600 + Math.random() * 300); }
         const res = await gem(
-            `DESIGN ZOHO SOLUTION FOR ${cli.company} BASED ON: ${JSON.stringify(reqs)}\nCRITICAL: RETURN ONLY RAW JSON. NO MARKDOWN. SCHEMA: {"primary_products":["..."],"implementation_phases":[{"name":"...","duration":"..."}],"team_structure":"...","monthly_cost":"...","workflow":[{"step":"1","name":"...","description":"..."}]}\n\nCRITICAL: YOU MUST INCLUDE THE FOLLOWING SPECIFIC WORKFLOWS IN THE "workflow" ARRAY (adapt specific names/steps to the client but keep the core meaning):\n1) Complaint Intake & Customer Integration\n2) PAG Tech Desk Screening & Assignment\n3) FRT Field Visit & Defect Investigation\n4) Sample Testing & QA Integration\n5) CIR Generation & DOP Approvals\n6) Material Return & SAP GRN Sync\n7) Financial Settlement & Credit Note\n8) CAPA Management & RCA\n9) Recovery & Liquidation Workflows`,
+            `DESIGN ZOHO CCMS SOLUTION FOR ${cli.company} BASED ON: ${JSON.stringify(reqs)}\nCRITICAL: RETURN ONLY RAW JSON. NO MARKDOWN. SCHEMA: {"primary_products":["..."],"implementation_phases":[{"name":"...","duration":"..."}],"team_structure":"...","monthly_cost":"...","workflow":[{"step":"1","name":"...","description":"..."}]}\n\nCRITICAL: YOU MUST INCLUDE THE FOLLOWING SPECIFIC WORKFLOWS IN THE "workflow" ARRAY (adapt names to the client context but keep the core CCMS logic):\n1) Complaint Intake & SAP S/4HANA Validation\n2) PAG Tech Desk Screening & Duplicate Check\n3) FRT Field Visit & Defect-Wise Checklist\n4) Specialist Investigation (QA/TG/Logistics/IPCA)\n5) CIR Creation & DOP Approval Workflows\n6) Return Logistics & SAP GRN Synchronisation\n7) Financial Settlement (Credit/Debit Memo) & SAP Closure\n8) CAPA Management, RCA & Effectiveness Tracking\n9) Liability Recovery & Salvage Liquidation`,
             2000, 0.4, true
         );
         sol = safeJ(res);
@@ -1250,15 +1177,15 @@ async function buildSolution() {
         const products = ['Zoho CRM Plus', 'Zoho Desk', 'Zoho Survey', 'Zoho Analytics'];
         sol = {
             primary_products: products,
-            implementation_phases: [{ name: 'Requirement & FSD', duration: '2 Weeks' }, { name: 'Configuration', duration: '8 Weeks' }, { name: 'UAT & Training', duration: '4 Weeks' }],
-            team_structure: '1 Sr. BA, 2 Developers, 1 QA', monthly_cost: 'Based on User Count',
+            implementation_phases: [{ name: 'Requirement & FSD', duration: '30 Working Days' }, { name: 'Configuration & Build', duration: '8 Weeks' }, { name: 'Integrations & UAT', duration: '6 Weeks' }],
+            team_structure: '1 Delivery Lead, 1 PM, 1 Sr. BA, 2 Developers, 1 QA', monthly_cost: 'Based on User Count',
             workflow: [
-                { step: '1', name: 'Complaint Intake', description: 'Digital capturing via Cares/Email/Manual with SAP validation.' },
-                { step: '2', name: 'PAG Tech Desk Screening', description: 'Validation of batch/invoice and defect routing.' },
-                { step: '3', name: 'FRT Field Investigation', description: 'On-site investigation and checklist completion.' },
-                { step: '4', name: 'CIR & DOP Approvals', description: 'Complaint Investigation Report generation and hierarchical approval.' },
-                { step: '5', name: 'Material Return & Settlement', description: 'SAP GRN sync, salvage, and credit/debit note generation.' },
-                { step: '6', name: 'CAPA Management', description: 'Root cause analysis and corrective/preventive tracking.' }
+                { step: '1', name: 'Complaint Intake', description: 'Digital capturing via Cares/Email/Manual with SAP S/4HANA validation.' },
+                { step: '2', name: 'PAG Tech Desk Screening', description: 'Validation of batch/invoice and duplicate usage detection.' },
+                { step: '3', name: 'FRT Field Investigation', description: 'On-site investigation using defect-wise checklists.' },
+                { step: '4', name: 'CIR & DOP Approvals', description: 'Complaint Investigation Report generation and hierarchical approval thresholds.' },
+                { step: '5', name: 'Material Return & Settlement', description: 'SAP GRN synchronisation, salvage, and credit/debit note generation.' },
+                { step: '6', name: 'CAPA & Recovery', description: 'Root cause analysis, corrective actions, and recovery from liable parties.' }
             ]
         };
         hideLdr(); setStg(4, 'done');
@@ -1277,165 +1204,147 @@ async function generateProposal() {
     const wfRows     = workflows.map(w => `<tr><td style="font-weight:700;color:#1A4FD6;text-align:center;width:40px">${w.step}</td><td style="font-weight:600">${w.name}</td><td style="color:#4F6282">${w.description}</td></tr>`).join('');
 
     const html = `<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"/><title>Zoho Proposal — ${cli.company}</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet"/>
 <style>
+:root{--primary:#3B82F6;--navy:#0F172A;--slate:#475569;--bg:#F8FAFC;--white:#FFFFFF;--brd:#E2E8F0}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-body{font-family:'Inter',sans-serif;color:#1A2540;line-height:1.6;background:#f5f7fa}
-.page{max-width:960px;margin:0 auto;background:#fff;box-shadow:0 4px 40px rgba(0,0,0,.1)}
-.cover{background:#fff;padding:60px;border-bottom:4px solid #1A4FD6}
-.cover-logo{display:flex;align-items:center;gap:10px;margin-bottom:40px}
-.cover-logo-box{width:36px;height:36px;background:#1A4FD6;border-radius:8px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:16px}
-.cover-logo-name{font-weight:700;font-size:14px;color:#1A4FD6}
-h1{font-size:32px;font-weight:800;color:#1A4FD6;margin-bottom:10px}
-.client-name{font-size:24px;font-weight:700;margin-bottom:8px}
-.subtitle{font-size:14px;color:#4F6282;margin-bottom:40px}
-.cover-hero{width:100%;height:140px;background:linear-gradient(135deg,#EEF4FF,#C8DAFF);border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:52px;opacity:.6;margin-bottom:40px}
-.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;border-top:1px solid #E8EFF8;padding-top:24px}
-.meta-item label{font-size:10px;font-weight:700;letter-spacing:1.5px;text-transform:uppercase;color:#7A91B3;display:block;margin-bottom:3px}
-.meta-item span{font-size:14px;font-weight:600;color:#1A2540}
-.section{padding:48px 60px;border-top:1px solid #E8EFF8}
-.sec-head{display:flex;align-items:center;gap:12px;margin-bottom:24px}
-.sec-num{width:32px;height:32px;background:#1A4FD6;border-radius:8px;color:#fff;font-weight:700;font-size:13px;display:flex;align-items:center;justify-content:center}
-.sec-title{font-size:20px;font-weight:700;color:#1A4FD6}
-p{font-size:14px;color:#4F6282;line-height:1.75;margin-bottom:12px}
-table{width:100%;border-collapse:collapse;font-size:13px;margin-bottom:20px}
-thead tr{background:#0B1120}
-th{padding:12px 14px;text-align:left;font-size:11px;font-weight:700;color:rgba(255,255,255,.75);text-transform:uppercase;letter-spacing:.5px}
-td{padding:12px 14px;border-bottom:1px solid #E8EFF8;vertical-align:top}
+body{font-family:'Inter',sans-serif;color:var(--navy);line-height:1.6;background:#F1F5F9;print-color-adjust:exact;-webkit-print-color-adjust:exact}
+.page{max-width:960px;margin:20px auto;background:var(--white);box-shadow:0 20px 50px rgba(15,23,42,0.1);position:relative;overflow:hidden;border-radius:12px}
+.cover{height:1000px;display:flex;flex-direction:column;justify-content:center;padding:80px;background:radial-gradient(circle at 100% 0%, rgba(59,130,246,0.05) 0%, transparent 40%), radial-gradient(circle at 0% 100%, rgba(59,130,246,0.05) 0%, transparent 40%);position:relative}
+.cover::after{content:'';position:absolute;bottom:0;left:0;width:100%;height:8px;background:linear-gradient(90deg,var(--primary),#1D4ED8)}
+.cover-logo{display:flex;align-items:center;gap:12px;margin-bottom:60px}
+.cover-logo-box{width:48px;height:48px;background:var(--navy);border-radius:12px;display:flex;align-items:center;justify-content:center;color:#fff;font-weight:800;font-size:22px;box-shadow:0 10px 20px rgba(15,23,42,0.2)}
+.cover-logo-name{font-family:'DM Sans',sans-serif;font-weight:700;font-size:18px;color:var(--navy);letter-spacing:-0.5px}
+.cover-tag{font-size:12px;font-weight:600;color:var(--primary);text-transform:uppercase;letter-spacing:2px;margin-bottom:12px}
+h1{font-family:'DM Sans',sans-serif;font-size:48px;font-weight:700;color:var(--navy);line-height:1.1;letter-spacing:-1.5px;margin-bottom:20px}
+.client-name{font-size:28px;font-weight:500;color:var(--slate);margin-bottom:40px}
+.meta-card{background:#F8FAFC;border:1px solid var(--brd);border-radius:16px;padding:32px;display:grid;grid-template-columns:1fr 1fr;gap:24px;max-width:100%}
+.meta-item label{font-size:10px;font-weight:700;letter-spacing:1px;text-transform:uppercase;color:var(--slate);display:block;margin-bottom:4px}
+.meta-item span{font-size:15px;font-weight:600;color:var(--navy)}
+.section{padding:80px 80px 40px;position:relative;page-break-before:always}
+.sec-head{display:flex;align-items:flex-end;gap:16px;margin-bottom:40px;border-bottom:2px solid #F1F5F9;padding-bottom:12px}
+.sec-num{font-family:'DM Sans',sans-serif;font-size:60px;font-weight:700;color:#F1F5F9;line-height:0.8;position:absolute;left:30px;top:65px;z-index:0}
+.sec-title{font-family:'DM Sans',sans-serif;font-size:24px;font-weight:700;color:var(--navy);position:relative;z-index:1;letter-spacing:-0.5px}
+.sec-title span{color:var(--primary)}
+p{font-size:15px;color:var(--slate);line-height:1.8;margin-bottom:20px}
+.about-box{background:var(--navy);border-radius:20px;padding:40px;margin-bottom:32px;box-shadow:0 15px 30px rgba(15,23,42,0.15)}
+.about-box p{color:rgba(255,255,255,0.7);margin-bottom:0;font-size:16px}
+.clients-grid{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px}
+.client-tag{background:rgba(59,130,246,0.06);color:var(--primary);font-size:12px;font-weight:600;padding:6px 16px;border-radius:30px;border:1px solid rgba(59,130,246,0.15)}
+table{width:100%;border-collapse:separate;border-spacing:0;font-size:14px;margin-bottom:32px;border:1px solid var(--brd);border-radius:12px;overflow:hidden}
+th{background:#F8FAFC;padding:16px;text-align:left;font-size:11px;font-weight:700;color:var(--slate);text-transform:uppercase;letter-spacing:1px;border-bottom:1px solid var(--brd)}
+td{padding:16px;border-bottom:1px solid var(--brd);vertical-align:top;background:white}
 tr:last-child td{border-bottom:none}
-tr:nth-child(even) td{background:#FAFBFD}
-.badge{padding:3px 10px;border-radius:20px;font-size:11px;font-weight:600}
-.badge-config{background:#EEF4FF;color:#1A4FD6}
-.badge-tm{background:#FFF3E0;color:#E65100}
-.about-box{background:linear-gradient(135deg,#0B1120,#132040);border-radius:14px;padding:28px 32px;margin-bottom:20px}
-.about-box p{color:rgba(255,255,255,.7);margin-bottom:0}
-.clients-grid{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}
-.client-tag{background:#EEF4FF;color:#1A4FD6;font-size:12px;font-weight:600;padding:4px 12px;border-radius:20px;border:1px solid #C8DAFF}
-ul.bullets{padding-left:20px}
-ul.bullets li{font-size:13.5px;color:#4F6282;margin-bottom:8px}
-.acceptance-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-top:16px}
-.acceptance-col label{font-weight:700;font-size:14px;color:#1A2540;display:block;margin-bottom:16px}
-.sign-line{border-bottom:1px solid #CBD5E1;margin-bottom:12px;height:40px}
-.sign-field{font-size:12px;color:#7A91B3;margin-bottom:12px}
-.footer{background:#0B1120;padding:24px 60px;display:flex;align-items:center;justify-content:space-between}
-.footer-logo{display:flex;align-items:center;gap:8px}
-.footer-logo-box{width:28px;height:28px;background:#1A4FD6;border-radius:6px;display:flex;align-items:center;justify-content:center;font-weight:800;font-size:12px;color:#fff}
-.footer-brand{font-size:13px;font-weight:600;color:rgba(255,255,255,.65)}
-.editable-price:focus{background:#EEF4FF;outline:none}
-.editable-price{cursor:pointer;border-bottom:1px dashed #A0AEC0;font-weight:700;color:#1A4FD6;transition:all .2s}
-</style></head><body><div class="page">
+ul.bullets{padding-left:24px;margin-bottom:32px}
+ul.bullets li{font-size:15px;color:var(--slate);margin-bottom:12px;position:relative}
+.badge{padding:4px 12px;border-radius:30px;font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:0.5px}
+.badge-config{background:rgba(59,130,246,0.1);color:var(--primary)}
+.badge-tm{background:rgba(245,158,11,0.1);color:#F59E0B}
+.acceptance-grid{display:grid;grid-template-columns:1fr 1fr;gap:60px;margin-top:40px}
+.sign-box{border:1px solid var(--brd);border-radius:16px;padding:32px}
+.sign-label{font-weight:700;font-size:14px;color:var(--navy);margin-bottom:24px;display:block}
+.sign-line{border-bottom:1px solid var(--brd);margin-bottom:20px;height:40px}
+.sign-meta{font-size:12px;color:var(--slate);margin-bottom:4px}
+.footer{padding:40px 80px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--brd);background:#F8FAFC}
+.footer-text{font-size:12px;color:var(--slate);font-weight:500}
+.price-tag{color:var(--primary);font-weight:700;font-family:'DM Sans',sans-serif}
+@media print{.page{margin:0;box-shadow:none;border-radius:0}.no-print{display:none}}
+</style></head><body>
+<div class="page">
 <div class="cover">
   <div class="cover-logo"><div class="cover-logo-box">F</div><div class="cover-logo-name">FRISTINE INFOTECH</div></div>
-  <h1>Zoho Implementation Proposal For CCMS</h1>
-  <div class="client-name">${cli.company || 'Client'}</div>
-  <div class="subtitle">${industry} · Prepared by Fristine Infotech Presales Team</div>
-  <div class="cover-hero"><svg viewBox="0 0 120 60" width="120" height="60" fill="none"><rect x="10" y="20" width="20" height="30" rx="3" fill="#C8DAFF"/><rect x="35" y="10" width="20" height="40" rx="3" fill="#1A4FD6"/><rect x="60" y="25" width="20" height="25" rx="3" fill="#C8DAFF"/><path d="M90 15l10 20H80z" fill="#1A4FD6" opacity=".3"/><circle cx="95" cy="15" r="5" fill="#1A4FD6"/></svg></div>
-  <div class="meta-grid">
-    <div class="meta-item"><label>Date</label><span>${dateStr}</span></div>
-    <div class="meta-item"><label>Prepared For</label><span>${cli.company || 'Client'}</span></div>
-    <div class="meta-item"><label>Prepared By</label><span>Fristine Infotech Presales</span></div>
+  <div class="cover-tag">Implementation Proposal</div>
+  <h1>Zoho CRM Plus for CCMS Lifecycle</h1>
+  <div class="client-name">Prepared for ${cli.company || 'Client'}</div>
+  <div class="meta-card">
+    <div class="meta-item"><label>Date / Version</label><span>${dateStr} / v1.2</span></div>
+    <div class="meta-item"><label>Project Reference</label><span>PRJ-CCMS-${cli.company?.substring(0,3).toUpperCase() || 'XXX'}</span></div>
+    <div class="meta-item"><label>Solution Architect</label><span>Fristine Presales Team</span></div>
     <div class="meta-item"><label>Contact</label><span>presales@fristinetech.com</span></div>
   </div>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">1</div><div class="sec-title">About Fristine Infotech</div></div>
-  <div class="about-box"><p>Fristine Infotech is India's leading Premium Zoho Partner helping clients across markets, industries & geographies solve complex business problems through bespoke Zoho implementations.</p></div>
-  <p>Over <strong>10 years</strong> and <strong>200+ implementations</strong> across Marketing, Sales, Operations, Finance, and Support.</p>
-  <p style="font-weight:600;color:#1A2540;margin-bottom:8px;margin-top:16px">Our Key Clients:</p>
-  <div class="clients-grid">${['eBay','Pepperfry','Edelweiss','YES Securities','NPCI','Jio','Suzlon','Mercedes-Benz','TATA MD','CARE Ratings'].map(c=>`<span class="client-tag">${c}</span>`).join('')}</div>
+  <div class="sec-num">01</div>
+  <div class="sec-head"><div class="sec-title">The <span>Fristine</span> Advantage</div></div>
+  <div class="about-box"><p>Fristine Infotech is India's premier Zoho Partner, recognized as the "Innovator of the Year". We specialize in transforming complex legacy workflows into streamline digital ecosystems using Zoho's unified stack.</p></div>
+  <p>With a decade of experience and over <strong>200 successful enterprise implementations</strong>, we bring a wealth of domain expertise in manufacturing, operations, and quality management.</p>
+  <div class="clients-grid">${['eBay','Pepperfry','Edelweiss','Jio','Suzlon','Mercedes-Benz','TATA MD','CARE Ratings','CRISIL','NPCI'].map(c=>`<span class="client-tag">${c}</span>`).join('')}</div>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">2</div><div class="sec-title">Executive Summary</div></div>
-  <p><strong>${cli.company || 'Client'}</strong> intends to implement a unified Customer Complaint Management System (CCMS) on Zoho CRM Plus to digitise and streamline the end-to-end complaint lifecycle, starting from complaint intake (via Cares / Email / Manual) through investigation, approvals, settlement, returns, financial closure, and final customer communication.</p>
-  <p><strong>FRD/Business Requirements at a glance:</strong></p>
+  <div class="sec-num">02</div>
+  <div class="sec-head"><div class="sec-title">Executive <span>Summary</span></div></div>
+  <p>For <strong>${cli.company || 'Client'}</strong>, the proposed Zoho CRM Plus implementation will serve as the "High-Fidelity Core" for all Customer Complaints. This system will bridge the gap between factory-floor quality issues and back-office financial settlements.</p>
+  <p><strong>Core Business Requirements:</strong></p>
   <ul class="bullets">
-    <li>Digital complaint intake with invoice/batch/quantity selection and evidence uploads.</li>
-    <li>Routing & ownership starting with PAG Tech Desk screening, followed by FRT investigation.</li>
-    <li>Parallel CAPA initiation with root cause analysis, countermeasures, and effectiveness tracking.</li>
-    <li>CIR (Complaint Investigation Report) creation with Delegation of Power (DOP) approvals.</li>
-    <li>Settlement pathways including No Claim, Salvage, and Return & Take Back.</li>
-    <li>SAP integration for invoice/batch data, GRN, and credit/debit memo creation.</li>
-    <li>Dashboards & analytics for operational, financial, quality and SLA metrics.</li>
+    <li><strong>Omni-channel Intake:</strong> Unified logging with SAP-validated Invoice & Batch selection.</li>
+    <li><strong>Investigation Workflow:</strong> Structured PAG screening and FRT field investigation tracking.</li>
+    <li><strong>Regulatory & Quality:</strong> CIR generation with RCA and parallel CAPA lifecycle management.</li>
+    <li><strong>Financial Closure:</strong> SAP-integrated Return (RE/GRN) and Credit/Debit Note automation.</li>
+    <li><strong>Intelligence:</strong> Real-time SLA monitoring and executive dashboards for liability & cycle times.</li>
   </ul>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num" style="background:linear-gradient(135deg,#1A4FD6,#3B82F6)">W</div><div class="sec-title" style="color:#0B1120">Implementation Workflow</div></div>
-  <p style="margin-bottom:20px">The following workflow outlines how Fristine Infotech will implement the CCMS step-by-step:</p>
-  <table style="margin-top:16px"><thead style="background:#1A4FD6"><tr><th style="color:#fff;text-align:center">Step</th><th style="color:#fff">Workflow</th><th style="color:#fff">Description</th></tr></thead><tbody>${wfRows}</tbody></table>
+  <div class="sec-num">03</div>
+  <div class="sec-head"><div class="sec-title">Solution <span>Architecture</span></div></div>
+  <p>The solution follows the Fristine CCMS Reference Architecture, ensuring a 9-step closed-loop process from complaint to CAPA closure.</p>
+  <table>
+    <thead><tr><th style="width:60px;text-align:center">#</th><th>Workflow Phase</th><th>Primary Objectives</th></tr></thead>
+    <tbody>${wfRows.replace(/<tr>/g, '<tr>').replace(/<td style="font-weight:700;color:#1A4FD6;text-align:center;width:40px">/g, '<td style="font-weight:800;color:var(--primary);text-align:center">').replace(/<td style="font-weight:600">/g, '<td style="font-weight:600;color:var(--navy)">')}</tbody>
+  </table>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">3</div><div class="sec-title">Detailed Scope Of Work</div></div>
-  <p style="font-weight:700;color:#0B1120;font-size:14px;margin-bottom:10px">Zoho CRM & Desk Setup</p>
-  <table><thead><tr><th>Requirement</th><th>Status</th><th>Persona</th></tr></thead><tbody>
-    <tr><td>Organisation Setup & Roles</td><td><span class="badge badge-config">Config</span></td><td>Admin</td></tr>
-    <tr><td>Complaint Intake via TSL Cares</td><td><span class="badge badge-tm">Custom</span></td><td>Admin</td></tr>
-    <tr><td>FRT Investigation Management</td><td><span class="badge badge-config">Config</span></td><td>Admin / Service</td></tr>
-    <tr><td>CIR Approval Workflows (DOP)</td><td><span class="badge badge-config">Config</span></td><td>Admin / Service</td></tr>
-    <tr><td>Settlement & Salvage Computation</td><td><span class="badge badge-config">Config</span></td><td>Finance</td></tr>
-    <tr><td>Material Return & Logistics</td><td><span class="badge badge-config">Config</span></td><td>Logistics</td></tr>
-    <tr><td>CAPA & Recovery Management</td><td><span class="badge badge-config">Config</span></td><td>QA / Service</td></tr>
-    <tr><td>Zoho Desk SLA Escalations</td><td><span class="badge badge-config">Config</span></td><td>IT / Admin</td></tr>
+  <div class="sec-num">04</div>
+  <div class="sec-head"><div class="sec-title">Detailed <span>Scope Of Work</span></div></div>
+  <p style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:12px">Module 1: Zoho CRM CCMS Configuration</p>
+  <table><thead><tr><th>Infrastructure</th><th>Capability Mapping</th><th>Persona</th></tr></thead><tbody>
+    <tr><td>Complaint Core</td><td>Custom modules for Intake, CIR, and CAPA with 100% data integrity.</td><td>Admin / Service</td></tr>
+    <tr><td>PAG Tech Desk</td><td>Advanced validation rules for duplicate batch screening and routing.</td><td>PAG Admin</td></tr>
+    <tr><td>FRT Investigation</td><td>Field visit management with dynamic defect-wise checklists and e-Sign.</td><td>Field Engineer</td></tr>
+    <tr><td>DOP Engine</td><td>Workflow-driven approval matrix based on financial liability levels.</td><td>Finance / HOD</td></tr>
+    <tr><td>Return Lifecycle</td><td>Return initiation, Hub logistics tracking, and SAP GRN handshake.</td><td>Logistics</td></tr>
   </tbody></table>
   
-  <p style="font-weight:700;color:#0B1120;font-size:14px;margin-top:20px;margin-bottom:10px">Integrations & Analytics</p>
-  <table><thead><tr><th>Requirement</th><th>Status</th><th>Persona</th></tr></thead><tbody>
-    <tr><td>SAP S4 Hana APIs (Invoice, GRN, Credit)</td><td><span class="badge badge-tm">Custom</span></td><td>IT / Admin</td></tr>
-    <tr><td>IPCA APIs (Investigation Reports)</td><td><span class="badge badge-tm">Custom</span></td><td>IT / Admin</td></tr>
-    <tr><td>SMS & WhatsApp Gateway</td><td><span class="badge badge-tm">Custom</span></td><td>IT / Admin</td></tr>
-    <tr><td>Operational & Quality Dashboards</td><td><span class="badge badge-config">Config</span></td><td>MIS Team</td></tr>
-    <tr><td>Data Migration & UAT/Training</td><td><span class="badge badge-tm">T&M</span></td><td>IT / Admin</td></tr>
+  <p style="font-weight:700;color:var(--navy);font-size:14px;margin-top:20px;margin-bottom:12px">Module 2: Enterprise Integrations</p>
+  <table><thead><tr><th>Connector</th><th>Exchange Details</th><th>Method</th></tr></thead><tbody>
+    <tr><td>SAP S/4HANA</td><td>Real-time Bi-directional sync for Invoices, Batch, and RE/GRN.</td><td>REST API</td></tr>
+    <tr><td>IPCA Platform</td><td>Automated investigation request submission and report parsing.</td><td>Webhooks</td></tr>
+    <tr><td>Zoho Ecosystem</td><td>Unified data flow between Desk (Tickets), Analytics, and Survey.</td><td>Native</td></tr>
   </tbody></table>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">4</div><div class="sec-title">Project Plan & Governance</div></div>
-  <ul class="bullets">
-    <li><strong>Timeline:</strong> Delivery within 140 Working days / 6.5 Calendar Months.</li>
-    <li><strong>Delivery Lead:</strong> Accountable for the Architecture Plan and Risk Mitigation.</li>
-    <li><strong>Project Manager:</strong> Day-to-day control and management of progress.</li>
-    <li><strong>Escalation Path:</strong> Level 1 (Delivery Lead, 6 Hours) → Level 2 (Operation Manager, 2 Days) → Level 3 (CTO, 4 Days).</li>
-    <li><strong>Change Requests:</strong> Reviewed through a Change Advisory Board (CAB). No obligation to proceed without written approval.</li>
-  </ul>
-</div>
-
-<div class="section">
-  <div class="sec-head"><div class="sec-num">5</div><div class="sec-title">Commercials</div></div>
-  <p style="font-weight:700;color:#0B1120;margin-bottom:10px">Implementation Efforts</p>
-  <table><thead><tr><th>#</th><th>Particulars</th><th>Type</th><th>Est.</th><th>Amount (INR)</th></tr></thead><tbody>
-    <tr><td>1</td><td>Requirement Workshop & FSD</td><td><span class="badge badge-tm">T&M</span></td><td>30 Days</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
-    <tr><td>2</td><td>CRM & Desk Implementation</td><td><span class="badge badge-config">Project</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
-    <tr><td>3</td><td>SAP & IPCA Integrations</td><td><span class="badge badge-config">Project</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
-    <tr><td>4</td><td>Data Migration & Training</td><td><span class="badge badge-tm">T&M</span></td><td>22 Days</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
-    <tr><td>5</td><td>30-Day Hyper-care</td><td><span class="badge badge-config">Project</span></td><td>NA</td><td contenteditable="true" class="editable-price">₹ (Included)</td></tr>
-    <tr style="background:#EEF4FF"><td colspan="4" style="font-weight:700;color:#1A4FD6;font-size:14px">Implementation Subtotal</td><td contenteditable="true" class="editable-price">₹ (Quoted)</td></tr>
+  <div class="sec-num">05</div>
+  <div class="sec-head"><div class="sec-title">Commercial <span>Model</span></div></div>
+  <p>The following estimates reflect the effort required for a standard "Platinum" CCMS Implementation on Zoho CRM Plus.</p>
+  <table><thead><tr><th>Phase</th><th>Activity Description</th><th>Model</th><th>Amount (INR)</th></tr></thead><tbody>
+    <tr><td>Phase 1</td><td>Requirement Discovery, FSD Drafting & Sign-off</td><td><span class="badge badge-tm">T&M</span></td><td class="price-tag" contenteditable="true">₹ (Quoted)</td></tr>
+    <tr><td>Phase 2</td><td>CCMS Core Configuration & Workflow Automation</td><td><span class="badge badge-config">Fixed</span></td><td class="price-tag" contenteditable="true">₹ (Quoted)</td></tr>
+    <tr><td>Phase 3</td><td>SAP S/4HANA & 3rd Party API Integrations</td><td><span class="badge badge-config">Fixed</span></td><td class="price-tag" contenteditable="true">₹ (Quoted)</td></tr>
+    <tr><td>Phase 4</td><td>Migration, UAT, and Go-Live Hypercare</td><td><span class="badge badge-config">Fixed</span></td><td class="price-tag" contenteditable="true">₹ (Included)</td></tr>
+    <tr style="background:#F8FAFC"><td colspan="3" style="font-weight:700">Estimated Project Total</td><td class="price-tag" contenteditable="true">₹ (Quoted)</td></tr>
   </tbody></table>
   
-  <p style="font-weight:700;color:#0B1120;margin-top:20px;margin-bottom:10px">Run Model (Platinum Plan For 12 Months)</p>
-  <ul class="bullets" style="margin-bottom:16px">
-    <li>Included Support & Bug-Fix Hours: 80 hrs/mo</li>
-    <li>Coverage Window: 16 × 6 (Mon–Sat)</li>
-    <li>SLA First Response: 1 business hr</li>
-    <li>Scope: L1–L3 support, bug fixes, config, performance tuning</li>
-  </ul>
-  <table style="width:50%"><tbody><tr style="background:#0B1120;color:#fff"><td colspan="3" style="font-weight:700;padding:10px">Monthly Run Plan Fee</td><td contenteditable="true" class="editable-price" style="color:#FFF;padding:10px">₹ (Quoted)</td></tr></tbody></table>
-  <p style="font-size:11px;color:#7A91B3">Taxes: The above pricing is exclusive of GST. Zoho License costs are not included and must be paid in full upfront.</p>
+  <p style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:8px">Managed Services (Optional)</p>
+  <p style="font-size:13px;margin-bottom:12px">80 Hours/Month support | SLA-driven response | L1, L2, L3 Support coverage.</p>
+  <table style="width:50%"><tbody><tr style="background:var(--navy);color:#fff"><td style="font-weight:700">Monthly Support Fee</td><td class="price-tag" contenteditable="true" style="color:#FFF">₹ (Quoted)</td></tr></tbody></table>
 </div>
 
 <div class="section">
-  <div class="sec-head"><div class="sec-num">6</div><div class="sec-title">Acceptance</div></div>
+  <div class="sec-num">06</div>
+  <div class="sec-head"><div class="sec-title">Project <span>Acceptance</span></div></div>
   <div class="acceptance-grid">
-    <div class="acceptance-col"><label>For Fristine Infotech Pvt Ltd</label><div class="sign-line"></div><div class="sign-field">Signature:</div><div class="sign-line"></div><div class="sign-field">Name:</div><div class="sign-line"></div><div class="sign-field">Date:</div></div>
-    <div class="acceptance-col"><label>For ${cli.company || 'Client'}</label><div class="sign-line"></div><div class="sign-field">Signature:</div><div class="sign-line"></div><div class="sign-field">Name:</div><div class="sign-line"></div><div class="sign-field">Date:</div></div>
+    <div class="sign-box"><span class="sign-label">For Fristine Infotech Pvt Ltd</span><div class="sign-line"></div><div class="sign-meta">Signature & Stamp</div><div class="sign-line"></div><div class="sign-meta">Date</div></div>
+    <div class="sign-box"><span class="sign-label">For ${cli.company || 'Client'}</span><div class="sign-line"></div><div class="sign-meta">Authorized Signatory</div><div class="sign-line"></div><div class="sign-meta">Date</div></div>
   </div>
 </div>
 
 <div class="footer">
-  <div class="footer-logo"><div class="footer-logo-box">F</div><div class="footer-brand">Fristine Infotech · India's Leading Premium Zoho Partner</div></div>
-  <div class="footer-conf">Confidential · ${new Date().getFullYear()}</div>
+  <div class="footer-text">Fristine Infotech · Zoho Premium Partner</div>
+  <div class="footer-text">Confidential © ${new Date().getFullYear()}</div>
 </div>
 </div></body></html>`;
 

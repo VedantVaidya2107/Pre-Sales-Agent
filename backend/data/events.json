@@ -102,5 +102,31 @@
       "note": null,
       "timestamp": "2026-03-24T17:13:19.390821+00:00"
     }
+  ],
+  "FRIST005": [
+    {
+      "client_id": "FRIST005",
+      "event": "bot_accessed",
+      "note": null,
+      "timestamp": "2026-03-25T05:09:48.203218+00:00"
+    },
+    {
+      "client_id": "FRIST005",
+      "event": "conversation_started",
+      "note": null,
+      "timestamp": "2026-03-25T05:10:01.201095+00:00"
+    },
+    {
+      "client_id": "FRIST005",
+      "event": "proposal_generated",
+      "note": null,
+      "timestamp": "2026-03-25T05:14:20.417727+00:00"
+    },
+    {
+      "client_id": "FRIST005",
+      "event": "proposal_submitted",
+      "note": null,
+      "timestamp": "2026-03-25T05:14:20.461059+00:00"
+    }
   ]
 }
