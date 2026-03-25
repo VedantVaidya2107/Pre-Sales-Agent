@@ -83,17 +83,17 @@ QUALITY CHECKLIST:
 ✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED ✓ SUMMARY BEFORE COMPLETION`;
 
 /* ══ PROPOSAL SPECIALIST MODE (FOR DOCUMENT GENERATION) ══ */
-const PROPOSAL_SPECIALIST_PROMPT = `You are an expert Proposal Writer at Fristine Infotech. Your goal is to draft high-converting proposals that are uniquely tailored to the client's needs.
+const PROPOSAL_SPECIALIST_PROMPT = `You are an expert Proposal Writer at Fristine Infotech. Your goal is to draft high-converting, deeply technical proposals that are uniquely tailored to the client's needs.
 
 CORE GUIDELINES:
 1. STRUCTURE: Use the professional, sectioned flow of a high-end technical proposal.
-2. GRAMMAR & POLISH: Correct all syntax, spelling, and punctuation. Use a professional yet persuasive tone.
-3. THE "ANTI-STATIC" RULE: Do not simply swap out names. Analyze the client’s specific problem and rewrite the "Solution" and "Value Proposition" sections to address their unique pain points.
-4. VARIETY: Use diverse sentence structures. Avoid repetitive phrasing like "We will provide". Use "Our approach ensures", "Leveraging our expertise", etc.
-5. DYNAMIC MODIFICATION: Adjust the depth of the "Scope of Work" and "Investment" sections based on project complexity. If the project is massive, be extremely detailed. If it is small, stay concise but professional.
+2. TECHNICAL GRANULARITY: Each section must be comprehensive. Avoid high-level summaries. Detail specific sub-features, nested workflows, and technical dependencies.
+3. THE "ANTI-STATIC" RULE: Do not simply swap out names. Analyze the client’s specific problem and rewrite the "Solution" and "Value Proposition" sections to address their unique pain points with technical precision.
+4. DETAIL LEVEL: If the project is complex, your output should be equivalent to a 10-15 page technical implementation plan. Be extremely granular in the "Detailed Scope of Work".
+5. VARIETY & POLISH: Use diverse, sophisticated sentence structures. Use "Our architecture leverages...", "To mitigate risk during sync...", etc.
 
 YOUR TASK:
-Using the captured requirements, generate a custom proposal that improves upon generic templates and adapts every word to fit this specific lead.`;
+Using the captured requirements, generate an exhaustive technical proposal that serves as a definitive implementation blueprint.`;
 
 /* ══ BOOT ══ */
 async function init() {
@@ -1234,24 +1234,25 @@ async function buildSolution() {
         
         // We now ask the AI to generate the ENTIRE content for the proposal sections
         const systemPrompt = `${PROPOSAL_SPECIALIST_PROMPT}\n\nCLIENT CONTEXT: ${JSON.stringify(reqs)}`;
-        const userPrompt = `Generate a COMPREHENSIVE ZOHO PROPOSAL. 
+        const userPrompt = `Generate an EXHAUSTIVE TECHNICAL ZOHO PROPOSAL. 
 RETURN ONLY RAW JSON. NO MARKDOWN. 
 SCHEMA: {
-    "title": "Clear catch title",
-    "executive_summary": "Persuasive 2-3 paragraph summary following the Anti-Static rule.",
-    "core_requirements": ["list of 5 key requirements"],
+    "title": "Clear catch technical title",
+    "executive_summary": "Persuasive 4-5 paragraph executive summary following the Anti-Static rule, deeply aligning Fristine's expertise with client goals.",
+    "core_requirements": ["list of 10-12 granular requirements identified"],
     "solution_architecture": [
-        {"phase": "1", "name": "...", "objective": "..."}
+        {"phase": "1", "name": "...", "objective": "Detailed objective including technical components"}
     ],
     "detailed_scope": [
-        {"module": "...", "capabilities": ["..."], "persona": "..."}
+        {"module": "Technical Module Name", "capabilities": ["8-10 specific technical capabilities per module"], "persona": "Impacted Stakeholders"}
     ],
     "integrations": [
-        {"name": "...", "benefit": "...", "method": "..."}
+        {"name": "...", "benefit": "...", "method": "API / Webhook / Native / Custom Middleware Detail"}
     ],
     "commercial_phases": [
-        {"name": "Phase 1: Discovery", "amount": "₹ (Quoted)", "model": "T&M"},
-        {"name": "Phase 2: Build", "amount": "₹ (Quoted)", "model": "Fixed"}
+        {"name": "Discovery & Requirement Finalization", "amount": "₹ (Quoted)", "model": "T&M"},
+        {"name": "Configuration & Workflow Build", "amount": "₹ (Quoted)", "model": "Fixed"},
+        {"name": "UAT & Deployment", "amount": "₹ (Quoted)", "model": "Fixed"}
     ]
 }`;
         const res = await gem(userPrompt, 3000, 0.6, true, [], systemPrompt);
