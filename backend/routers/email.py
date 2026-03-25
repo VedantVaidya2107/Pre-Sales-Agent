@@ -55,9 +55,10 @@ def send_bot(req: SendBotRequest):
     password = os.environ.get("EMAIL_PASS")
     
     if not user or not password:
-        print(f"[Email SIMULATED] Would send bot link to {req.to} for {req.company} ({req.clientId})")
-        print(f"  Bot URL: {req.botUrl}")
-        return {"success": True, "simulated": True}
+        raise HTTPException(
+            status_code=500, 
+            detail="Email credentials (EMAIL_USER/EMAIL_PASS) missing in server environment. Please set them in your Render dashboard."
+        )
         
     try:
         msg = MIMEMultipart()
@@ -91,8 +92,10 @@ def send_proposal(req: SendProposalRequest):
     password = os.environ.get("EMAIL_PASS")
     
     if not user or not password:
-        print(f"[Email SIMULATED] Would send proposal to {req.to} for {req.company}")
-        return {"success": True, "simulated": True}
+        raise HTTPException(
+            status_code=500, 
+            detail="Email credentials (EMAIL_USER/EMAIL_PASS) missing in server environment. Please set them in your Render dashboard."
+        )
         
     try:
         msg = MIMEMultipart()
