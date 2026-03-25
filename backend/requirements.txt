@@ -9,3 +9,6 @@ PyPDF2
 python-multipart
 supabase
 pycryptodome
+jinja2
+httpx
+markupSafe
