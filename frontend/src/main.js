@@ -80,6 +80,19 @@ CONSULTATION RULES:
 QUALITY CHECKLIST: 
 ✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED`;
 
+/* ══ PROPOSAL SPECIALIST MODE (FOR DOCUMENT GENERATION) ══ */
+const PROPOSAL_SPECIALIST_PROMPT = `You are an expert Proposal Writer at Fristine Infotech. Your goal is to draft high-converting proposals that are uniquely tailored to the client's needs.
+
+CORE GUIDELINES:
+1. STRUCTURE: Use the professional, sectioned flow of a high-end technical proposal.
+2. GRAMMAR & POLISH: Correct all syntax, spelling, and punctuation. Use a professional yet persuasive tone.
+3. THE "ANTI-STATIC" RULE: Do not simply swap out names. Analyze the client’s specific problem and rewrite the "Solution" and "Value Proposition" sections to address their unique pain points.
+4. VARIETY: Use diverse sentence structures. Avoid repetitive phrasing like "We will provide". Use "Our approach ensures", "Leveraging our expertise", etc.
+5. DYNAMIC MODIFICATION: Adjust the depth of the "Scope of Work" and "Investment" sections based on project complexity. If the project is massive, be extremely detailed. If it is small, stay concise but professional.
+
+YOUR TASK:
+Using the captured requirements, generate a custom proposal that improves upon generic templates and adapts every word to fit this specific lead.`;
+
 /* ══ BOOT ══ */
 async function init() {
     initTheme();
@@ -1207,37 +1220,54 @@ function showReqSummary() {
 }
 
 async function buildSolution() {
-    setStg(3, 'done'); setStg(4, 'act'); setPhase('Architecting CCMS Proposal…');
+    setStg(3, 'done'); setStg(4, 'act'); setPhase('Architecting Custom Proposal…');
     const steps = [
-        { pct: 15, txt: 'Analysing complaint management workflows…' },
-        { pct: 35, txt: 'Mapping to CCMS architecture & SAP…' },
-        { pct: 60, txt: 'Structuring implementation plan & CAPA…' },
-        { pct: 80, txt: 'Finalising proposal…' },
+        { pct: 15, txt: 'Analysing client-specific pain points…' },
+        { pct: 35, txt: 'Drafting uniquely tailored solution architecture…' },
+        { pct: 60, txt: 'Applying "Anti-Static" rewrite rules…' },
+        { pct: 85, txt: 'Finalizing Proposal Specialist draft…' },
     ];
     try {
         for (const s of steps) { showLdr(s.txt, s.pct); await sleep(600 + Math.random() * 300); }
-        const res = await gem(
-            `DESIGN ZOHO CCMS SOLUTION FOR ${cli.company} BASED ON: ${JSON.stringify(reqs)}\nCRITICAL: RETURN ONLY RAW JSON. NO MARKDOWN. SCHEMA: {"primary_products":["..."],"implementation_phases":[{"name":"...","duration":"..."}],"team_structure":"...","monthly_cost":"...","workflow":[{"step":"1","name":"...","description":"..."}]}\n\nCRITICAL: YOU MUST INCLUDE THE FOLLOWING SPECIFIC WORKFLOWS IN THE "workflow" ARRAY (adapt names to the client context but keep the core CCMS logic):\n1) Complaint Intake & SAP S/4HANA Validation\n2) PAG Tech Desk Screening & Duplicate Check\n3) FRT Field Visit & Defect-Wise Checklist\n4) Specialist Investigation (QA/TG/Logistics/IPCA)\n5) CIR Creation & DOP Approval Workflows\n6) Return Logistics & SAP GRN Synchronisation\n7) Financial Settlement (Credit/Debit Memo) & SAP Closure\n8) CAPA Management, RCA & Effectiveness Tracking\n9) Liability Recovery & Salvage Liquidation`,
-            2000, 0.4, true
-        );
+        
+        // We now ask the AI to generate the ENTIRE content for the proposal sections
+        const systemPrompt = `${PROPOSAL_SPECIALIST_PROMPT}\n\nCLIENT CONTEXT: ${JSON.stringify(reqs)}`;
+        const userPrompt = `Generate a COMPREHENSIVE ZOHO PROPOSAL. 
+RETURN ONLY RAW JSON. NO MARKDOWN. 
+SCHEMA: {
+    "title": "Clear catch title",
+    "executive_summary": "Persuasive 2-3 paragraph summary following the Anti-Static rule.",
+    "core_requirements": ["list of 5 key requirements"],
+    "solution_architecture": [
+        {"phase": "1", "name": "...", "objective": "..."}
+    ],
+    "detailed_scope": [
+        {"module": "...", "capabilities": ["..."], "persona": "..."}
+    ],
+    "integrations": [
+        {"name": "...", "benefit": "...", "method": "..."}
+    ],
+    "commercial_phases": [
+        {"name": "Phase 1: Discovery", "amount": "₹ (Quoted)", "model": "T&M"},
+        {"name": "Phase 2: Build", "amount": "₹ (Quoted)", "model": "Fixed"}
+    ]
+}`;
+        const res = await gem(userPrompt, 3000, 0.6, true, [], systemPrompt);
         sol = safeJ(res);
         if (!sol) throw new Error('Bad JSON from AI');
         hideLdr(); setStg(4, 'done');
         generateProposal();
     } catch (e) {
-        const products = ['Zoho CRM Plus', 'Zoho Desk', 'Zoho Survey', 'Zoho Analytics'];
+        console.error('[buildSolution error]', e);
+        // Fallback with same structure
         sol = {
-            primary_products: products,
-            implementation_phases: [{ name: 'Requirement & FSD', duration: '30 Working Days' }, { name: 'Configuration & Build', duration: '8 Weeks' }, { name: 'Integrations & UAT', duration: '6 Weeks' }],
-            team_structure: '1 Delivery Lead, 1 PM, 1 Sr. BA, 2 Developers, 1 QA', monthly_cost: 'Based on User Count',
-            workflow: [
-                { step: '1', name: 'Complaint Intake', description: 'Digital capturing via Cares/Email/Manual with SAP S/4HANA validation.' },
-                { step: '2', name: 'PAG Tech Desk Screening', description: 'Validation of batch/invoice and duplicate usage detection.' },
-                { step: '3', name: 'FRT Field Investigation', description: 'On-site investigation using defect-wise checklists.' },
-                { step: '4', name: 'CIR & DOP Approvals', description: 'Complaint Investigation Report generation and hierarchical approval thresholds.' },
-                { step: '5', name: 'Material Return & Settlement', description: 'SAP GRN synchronisation, salvage, and credit/debit note generation.' },
-                { step: '6', name: 'CAPA & Recovery', description: 'Root cause analysis, corrective actions, and recovery from liable parties.' }
-            ]
+            title: `Zoho CRM Plus Implementation for ${cli.company}`,
+            executive_summary: `Your need for streamlined operations at ${cli.company} requires a tailored approach. We've architected a solution that directly addresses your core bottlenecks.`,
+            core_requirements: reqs.must_have || ['Zoho Configuration'],
+            solution_architecture: [{ phase: '1', name: 'Intake', objective: 'Standardize incoming data' }],
+            detailed_scope: [{ module: 'CRM Core', capabilities: ['Workflow automation'], persona: 'Admin' }],
+            integrations: [{ name: 'Email', benefit: 'Direct sync', method: 'Native' }],
+            commercial_phases: [{ name: 'Implementation', amount: '₹ (Quoted)', model: 'Fixed' }]
         };
         hideLdr(); setStg(4, 'done');
         generateProposal();
@@ -1326,44 +1356,48 @@ ul.bullets li{font-size:15px;color:var(--slate);margin-bottom:12px;position:rela
 <div class="section">
   <div class="sec-num">02</div>
   <div class="sec-head"><div class="sec-title">Executive <span>Summary</span></div></div>
-  <p>For <strong>${cli.company || 'Client'}</strong>, the proposed Zoho CRM Plus implementation will serve as the "High-Fidelity Core" for all Customer Complaints. This system will bridge the gap between factory-floor quality issues and back-office financial settlements.</p>
-  <p><strong>Core Business Requirements:</strong></p>
+  <div class="executive-content">${sol.executive_summary?.replace(/\n/g, '<br/>') || ''}</div>
+  <p><strong>Key Requirements Captured:</strong></p>
   <ul class="bullets">
-    <li><strong>Omni-channel Intake:</strong> Unified logging with SAP-validated Invoice & Batch selection.</li>
-    <li><strong>Investigation Workflow:</strong> Structured PAG screening and FRT field investigation tracking.</li>
-    <li><strong>Regulatory & Quality:</strong> CIR generation with RCA and parallel CAPA lifecycle management.</li>
-    <li><strong>Financial Closure:</strong> SAP-integrated Return (RE/GRN) and Credit/Debit Note automation.</li>
-    <li><strong>Intelligence:</strong> Real-time SLA monitoring and executive dashboards for liability & cycle times.</li>
+    ${(sol.core_requirements || []).map(r => `<li>${r}</li>`).join('')}
   </ul>
 </div>
 
 <div class="section">
   <div class="sec-num">03</div>
-  <div class="sec-head"><div class="sec-title">Solution <span>Architecture</span></div></div>
-  <p>The solution follows the Fristine CCMS Reference Architecture, ensuring a 9-step closed-loop process from complaint to CAPA closure.</p>
+  <div class="sec-head"><div class="sec-title">Proposed <span>Architecture</span></div></div>
+  <p>Our tailored approach for ${cli.company} follows a structured phased rollout to ensure maximum adoption and minimal disruption.</p>
   <table>
-    <thead><tr><th style="width:60px;text-align:center">#</th><th>Workflow Phase</th><th>Primary Objectives</th></tr></thead>
-    <tbody>${wfRows.replace(/<tr>/g, '<tr>').replace(/<td style="font-weight:700;color:#1A4FD6;text-align:center;width:40px">/g, '<td style="font-weight:800;color:var(--primary);text-align:center">').replace(/<td style="font-weight:600">/g, '<td style="font-weight:600;color:var(--navy)">')}</tbody>
+    <thead><tr><th style="width:60px;text-align:center">Phase</th><th>Implementation Stage</th><th>Primary Objectives</th></tr></thead>
+    <tbody>
+      ${(sol.solution_architecture || []).map(a => `<tr><td style="font-weight:800;color:var(--primary);text-align:center">${a.phase}</td><td style="font-weight:600;color:var(--navy)">${a.name}</td><td style="color:var(--slate)">${a.objective}</td></tr>`).join('')}
+    </tbody>
   </table>
 </div>
 
 <div class="section">
   <div class="sec-num">04</div>
   <div class="sec-head"><div class="sec-title">Detailed <span>Scope Of Work</span></div></div>
-  <p style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:12px">Module 1: Zoho CRM CCMS Configuration</p>
-  <table><thead><tr><th>Infrastructure</th><th>Capability Mapping</th><th>Persona</th></tr></thead><tbody>
-    <tr><td>Complaint Core</td><td>Custom modules for Intake, CIR, and CAPA with 100% data integrity.</td><td>Admin / Service</td></tr>
-    <tr><td>PAG Tech Desk</td><td>Advanced validation rules for duplicate batch screening and routing.</td><td>PAG Admin</td></tr>
-    <tr><td>FRT Investigation</td><td>Field visit management with dynamic defect-wise checklists and e-Sign.</td><td>Field Engineer</td></tr>
-    <tr><td>DOP Engine</td><td>Workflow-driven approval matrix based on financial liability levels.</td><td>Finance / HOD</td></tr>
-    <tr><td>Return Lifecycle</td><td>Return initiation, Hub logistics tracking, and SAP GRN handshake.</td><td>Logistics</td></tr>
-  </tbody></table>
+  ${(sol.detailed_scope || []).map(s => `
+    <p style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:12px">${s.module}</p>
+    <table><thead><tr><th>Capability Mapping</th><th>Persona / Stakeholder</th></tr></thead><tbody>
+      <tr><td><ul style="padding-left:14px">${(s.capabilities || []).map(c => `<li>${c}</li>`).join('')}</ul></td><td>${s.persona}</td></tr>
+    </tbody></table>
+  `).join('')}
   
-  <p style="font-weight:700;color:var(--navy);font-size:14px;margin-top:20px;margin-bottom:12px">Module 2: Enterprise Integrations</p>
-  <table><thead><tr><th>Connector</th><th>Exchange Details</th><th>Method</th></tr></thead><tbody>
-    <tr><td>SAP S/4HANA</td><td>Real-time Bi-directional sync for Invoices, Batch, and RE/GRN.</td><td>REST API</td></tr>
-    <tr><td>IPCA Platform</td><td>Automated investigation request submission and report parsing.</td><td>Webhooks</td></tr>
-    <tr><td>Zoho Ecosystem</td><td>Unified data flow between Desk (Tickets), Analytics, and Survey.</td><td>Native</td></tr>
+  <p style="font-weight:700;color:var(--navy);font-size:14px;margin-top:20px;margin-bottom:12px">Ecosystem Integrations</p>
+  <table><thead><tr><th>Connector</th><th>Business Benefit</th><th>Method</th></tr></thead><tbody>
+    ${(sol.integrations || []).map(i => `<tr><td>${i.name}</td><td>${i.benefit}</td><td>${i.method}</td></tr>`).join('')}
+  </tbody></table>
+</div>
+
+<div class="section">
+  <div class="sec-num">05</div>
+  <div class="sec-head"><div class="sec-title">Commercial <span>Investment</span></div></div>
+  <p>Based on our "Anti-Static" evaluation, the following investment structure is optimized for your project scale.</p>
+  <table><thead><tr><th>Phase</th><th>Activity Details</th><th>Model</th><th>Amount (INR)</th></tr></thead><tbody>
+    ${(sol.commercial_phases || []).map(p => `<tr><td>${p.name}</td><td>Strategic Implementation Services</td><td><span class="badge ${p.model === 'T&M' ? 'badge-tm' : 'badge-config'}">${p.model}</span></td><td class="price-tag" contenteditable="true">${p.amount}</td></tr>`).join('')}
+    <tr style="background:#F8FAFC"><td colspan="3" style="font-weight:700">Estimated Project Total</td><td class="price-tag" contenteditable="true">₹ (Quoted)</td></tr>
   </tbody></table>
 </div>
 
