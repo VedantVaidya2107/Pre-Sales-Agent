@@ -77,6 +77,8 @@ CONSULTATION RULES:
   "summary": "Full solution architecture summary."
 }
 
+FILE ATTACHMENTS: Whenever a file is attached, your first priority is to extract all text and key requirements before drafting a response. If you cannot read the file, immediately notify the user rather than guessing.
+
 QUALITY CHECKLIST: 
 ✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED`;
 
