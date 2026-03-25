@@ -83,18 +83,17 @@ QUALITY CHECKLIST:
 ✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED ✓ SUMMARY BEFORE COMPLETION`;
 
 /* ══ PROPOSAL SPECIALIST MODE (FOR DOCUMENT GENERATION) ══ */
-const PROPOSAL_SPECIALIST_PROMPT = `Role: Expert Proposal Specialist.
+const PROPOSAL_SPECIALIST_PROMPT = `Role: Expert Proposal Specialist & Data Analyst.
 
-Core Operational Protocol:
-1. Mandatory File Parsing: Before drafting, you MUST access and extract all text from the attached PDF/DOCX. You are strictly prohibited from using generic placeholders. 
-2. Extraction Proof: Your first output must be a summary identifying the Client Name, Project Goals, and 3-5 specific technical requirements found in the attachment.
-3. Template Integration: Use the professional Fristine template as a skeleton. Do not "copy-paste." You must rewrite the "Solution," "Value Proposition," and "Technical Scope" sections to directly address the extracted requirements.
-4. Detail & Expansion Rule: Avoid brief summaries. Every main section must be long-form and detailed (minimum 3 paragraphs per section). If a requirement involves Zoho CRM, Analytics, Projects, or Desk, provide a granular technical implementation plan for that module.
-5. Grammar & Tone: Use active voice, professional business English, and perfect grammar. Eliminate all robotic or repetitive phrasing.
-6. Zoho Data Sync: At the end of every proposal, generate a structured summary table for Zoho CRM including: Lead Name, Estimated Project Value, and Phase-wise Timeline.
-7. Error Handling: If you cannot access the attachment content, state: "CRITICAL ERROR: Unable to read requirements document. Please provide a text summary."
+Critical Instruction (File Handling):
+1. Tool Priority: Before responding, you MUST parse and analyze the attached PDF/DOCX. You are strictly prohibited from using generic placeholders. 
+2. The "Null" Fix: If the requirement extraction returns a null value or an error, do NOT attempt to process it with code logic. Instead, immediately trigger the error message: "CRITICAL ERROR: Unable to read attachment. Please ensure 'File Search' is enabled in the agent settings or paste the text directly."
+3. Requirement Extraction: Upon successful parsing, you must list: Client Name, Primary Goal, and 3-5 Technical Requirements found in the document.
+4. Drafting Protocol: Use the professional Fristine template as a skeleton. Do not "copy-paste." You must rewrite the "Solution" and "Value Proposition" sections to be long-form (3+ paragraphs each), detailing specific integrations for Zoho CRM, Analytics, Projects, or Desk as mentioned in the requirements.
+5. Grammar & Tone: Use active voice, professional business English, and perfect grammar.
+6. Zoho Data Sync: Conclude with a structured summary table for Zoho CRM: Lead Name, Estimated Value, and Implementation Timeline.
 
-Task: Analyze the attached requirement document and generate a comprehensive, highly customized technical proposal using the established brand template.`;
+Task: Analyze the attached requirement document and generate a comprehensive, highly customized technical proposal with Data Analyst precision.`;
 
 /* ══ BOOT ══ */
 async function init() {
@@ -924,7 +923,7 @@ document.getElementById('fileIn').onchange = async (e) => {
         if (isAI) {
            addAg(`I was able to read your document <strong>${f.name}</strong> successfully, but I hit a temporary AI rate limit while analyzing it. <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span><br/><br/>Could you wait a minute and try again? Or describe what the document covers?`, { noEscape: true });
         } else {
-            addAg(`<strong>CRITICAL ERROR: Unable to read requirements document. Please provide a text summary.</strong> <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span>`, { noEscape: true });
+            addAg(`<strong>CRITICAL ERROR: Unable to read attachment. Please ensure 'File Search' is enabled in the agent settings or paste the text directly.</strong> <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error Code: PARSE_NULL_OR_FAILED</span>`, { noEscape: true });
         }
     }
     e.target.value = '';
