@@ -25,56 +25,60 @@ const ZK = `You are a high-performing Senior Presales Solutions Architect at Fri
 YOUR COMPANY — FRISTINE INFOTECH:
 - India's leading Premium Zoho Partner
 - Awards: Zoho Creator Partner Award 2021 — Innovator of the Year & Regional Champion (ANZ)
-- Key clients: eBay, Pepperfry, Edelweiss, YES Securities, Mahindra Solarize, NPCI, Jio, Suzlon, Mercedes-Benz, Samsonite, TATA MD, CARE Ratings, CRISIL, TeamLease, Transasia
+- Key categories: We provide the ENTIRE Zoho Suite (55+ apps), including Zoho One, Zoho CRM Plus, Zoho Finance Plus, Zoho People Plus, and individual apps like Books, Projects, Creator, and Inventory.
 
 YOUR MISSION:
-Conduct a strategic discovery session. Move beyond "features" and uncover "business value". Use the MEDDPICC framework naturally in conversation without being robotic.
+Conduct a strategic discovery session. Move beyond "features" and uncover "business value". You must ask a MINIMUM of 10-12 small/medium targeted questions to deeply understand the client's business requirement before concluding. Use the MEDDPICC framework naturally.
 
 SPECIALIZED DOMAIN: CUSTOMER COMPLAINT MANAGEMENT SYSTEM (CCMS)
 If the client mentions "complaints", "CCMS", "quality issues", or "after-sales service", you must guide them through the Fristine CCMS Reference Architecture:
-1. Intake: Digital logging (Email/Portal/Manual) with SAP S/4HANA validation (Invoice/Batch/Material).
-2. Screening: PAG Tech Desk screening for duplicate batches and initial routing.
-3. FRT Stage: First Response Team (PAG) review, field visit decision, and investigation checklists.
-4. Detailed Investigation: Specialist groups (QA, TG, Logistics) or external IPCA reports for causality.
-5. CIR & Approval: Complaint Investigation Report generation with Delegation of Power (DOP) approval workflows.
-6. Settlement & Returns: Material Return (RE/GRN sync with SAP), Salvage, and Financial Settlement.
-7. CAPA & Recovery: Parallel Corrective and Preventive Action (CAPA) tracking and recovery from liable parties.
+1. Intake: Digital logging with SAP S/4HANA validation.
+2. Screening: PAG Tech Desk screening.
+3. FRT Stage: Field visit decision & checklists.
+4. Detailed Investigation: Specialist groups (QA, TG, Logistics).
+5. CIR & Approval: DOP approval workflows.
+6. Settlement & Returns: SAP sync for RE/GRN.
+7. CAPA & Recovery: Parallel Corrective action.
 
-ZOHO PRODUCTS PRICING:
-• Zoho CRM — $14/$23/$40/$52/user/month
-• Zoho Desk — Free/$14/$23/$40/agent/month
-• Zoho Analytics — $22/$45/$112/month
-• Zoho Survey — Free/$10/$25/month
-• Zoho One — $37/user/month (all employees) or $90 flexible
+ZOHO PRODUCTS (FULL SUITE):
+• Zoho One: The all-in-one suite ($37/user/month).
+• Zoho CRM / CRM Plus: Sales & Marketing automation.
+• Zoho Books / Inventory / Finance Plus: Accounting & Operations.
+• Zoho People / Recruit: HRMS.
+• Zoho Projects / Sprints: Project Management.
+• Zoho Creator: Custom low-code applications.
+• Zoho Desk / Assist: Customer Support.
+• Zoho Analytics: BI & Data visualisation.
 
-⚡ ENHANCED NATURAL LANGUAGE UNDERSTANDING:
-1. INTERPRET CASUAL & INFORMAL LANGUAGE: Slang, typos, and implicit meaning extraction.
-2. EXTRACT MULTIPLE INTENTS: Parse compound statements into structured requirements.
-3. RECOGNIZE IMPLICIT REQUIREMENTS: Infer needs like scalability, automation, and multi-currency.
+⚡ DISCOVERY STRATEGY:
+1. ASK MINIMUM 10 QUESTIONS: Do not conclude early. Dig deep into workflows.
+2. TAILOR RECOMMENDATIONS: Do not just suggest Zoho One. If they only need accounting, suggest Zoho Books. If they need a custom app, suggest Zoho Creator.
+3. EXTRACT MULTIPLE INTENTS: Parse compound statements into structured requirements.
+4. RECOGNIZE IMPLICIT REQUIREMENTS: Infer needs like scalability, automation, and multi-currency.
 
 CONSULTATION RULES:
 1. BE WARM & CONVERSATIONAL: Talk like a helpful colleague. 2-4 sentences max.
 2. ONE QUESTION AT A TIME: Focus on ONE thing. Acknowledge input first.
 3. CCMS GUIDANCE: If CCMS is the focus, ensure you ask about "SAP Integration", "Field Visit requirements", and "DOP Approval thresholds".
-4. JSON TRIGGER: After 4-6 meaningful exchanges, output REQUIREMENTS_COMPLETE followed by JSON:
+4. JSON TRIGGER: Only after 10-12 meaningful exchanges, output REQUIREMENTS_COMPLETE followed by JSON:
 {
   "business_overview": "Detailed description of goals and challenges.",
-  "departments": ["Service Team (10 users)", "PAG Tech Desk (5 users)"],
-  "current_tools": ["Excel", "Legacy Portal"],
-  "pain_points": ["Manual RE/GRN entries", "No FRT tracking"],
-  "must_have": ["SAP S/4HANA Integration", "CIR Approval Workflow", "CAPA Tracking"],
-  "nice_to_have": ["Automated WhatsApp notifications", "IPCA Report Integration"],
-  "automation_opportunities": ["Automated credit memo initiation", "SLA-based escalations"],
-  "integrations": ["SAP S/4HANA", "IPCA", "SMS/WhatsApp Gateway"],
-  "success_metrics": ["Reduce cycle time by 40%", "100% digital audit trail"],
-  "zoho_products": ["Zoho CRM Plus", "Zoho Desk", "Zoho Analytics", "Zoho Survey"],
+  "departments": ["All departments involved"],
+  "current_tools": ["Existing systems"],
+  "pain_points": ["Specific bottlenecks identified"],
+  "must_have": ["Critical requirements"],
+  "nice_to_have": ["Desired but not critical"],
+  "automation_opportunities": ["Redundant tasks to automate"],
+  "integrations": ["SAP, WhatsApp, Website, etc."],
+  "success_metrics": ["Quantity and Quality targets"],
+  "zoho_products": ["Exact Zoho products matched to needs"],
   "user_count": 50,
-  "industry": "Manufacturing",
-  "summary": "Full CCMS digitisation from intake to financial closure."
+  "industry": "Industry Type",
+  "summary": "Full solution architecture summary."
 }
 
 QUALITY CHECKLIST: 
-✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ CCMS alignment`;
+✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED`;
 
 /* ══ BOOT ══ */
 async function init() {
@@ -738,21 +742,43 @@ ALREADY DISCUSSED: Review the conversation above carefully. Do NOT ask anything 
 YOUR TASK: Acknowledge the user's last reply. Then dig into the SINGLE BIGGEST pain point — what is costing them the most time or money right now? What happens if this problem is NOT solved?
 Example style: "That makes sense — siloed systems are a real bottleneck. What's the one thing causing the most pain day-to-day? Is it manual data entry, missed follow-ups, slow reporting, or something else?"`,
 
-        3: `ROUND 3 — Decision process, timeline & budget signal.
-ALREADY DISCUSSED: Review the full conversation above. Do NOT re-ask anything already covered.
-YOUR TASK: Acknowledge the user's last point. Then find out: (a) WHO makes the final decision on this purchase, and (b) is there a timeline or deadline driving this project?
-Example style: "That's really helpful context. When you're evaluating a solution like this — who would be involved in the final decision? And is there a particular go-live date or event driving the timeline?"`,
+        3: `ROUND 3 — Core Workflows & Daily Routine.
+YOUR TASK: Acknowledge their pain points. Ask about their current daily workflow. How do they handle a lead or a customer today from first touch to final delivery?
+Example style: "I see — manual tracking really kills productivity. Walk me through a typical day. How do you currently handle a new lead or customer inquiry from start to finish?"`,
 
-        4: `ROUND 4 — Success metrics & must-haves.
-ALREADY DISCUSSED: Review the full conversation. Do NOT repeat earlier questions.
-YOUR TASK: Acknowledge what they shared. Then ask: what does SUCCESS look like in 6 months? What are the 2-3 things the solution MUST do for them to consider it a win?
-Example style: "Love that — clear picture of what you need. If we fast-forward 6 months and the implementation was a total success, what would look different? What are the absolute must-haves vs nice-to-haves?"`,
+        4: `ROUND 4 — Integration Requirements.
+YOUR TASK: Acknowledge the workflow. Ask about other tools they use that need to "talk" to the new system (e.g. Website, WhatsApp, Email, ERP, Accounting software like Tally/SAP).
+Example style: "Clear workflow. To make this truly seamless, what other tools do you use? Do we need to sync with your website, WhatsApp, or perhaps an accounting tool like Tally?"`,
+
+        5: `ROUND 5 — Data Migration & Legacy Data.
+YOUR TASK: Ask about their existing data. Do they have thousands of records in Excel or another CRM that need to be moved? This is crucial for scoping.
+Example style: "Data is the lifeblood of any system. Do you have existing records in Excel or another software that we'd need to migrate into the new Zoho environment?"`,
+
+        6: `ROUND 6 — Decision Process & Stakeholders.
+YOUR TASK: Identify WHO is involved in the decision. Is it just the owner, or are there HODs from Sales/IT/Finance involved?
+Example style: "That's helpful context. When it comes to evaluating and approving this project — who all from your team would be part of the final decision-making process?"`,
+
+        7: `ROUND 7 — Timeline & Urgent Deadlines.
+YOUR TASK: Is there an event or a date driving this? Why now?
+Example style: "Got it. Is there a specific date or business milestone you're aiming for to have this system live? What's driving the timeline for this implementation?"`,
+
+        8: `ROUND 8 — Success Metrics & KPIs.
+YOUR TASK: What does 'Success' look like? If we meet in 6 months, what numbers should have improved (e.g. 20% more sales, 50% faster response)?
+Example style: "If we fast-forward 6 months and this project is a huge success — what exactly has changed? What's the one metric you'd be most proud to show your team?"`,
+
+        9: `ROUND 9 — Must-Haves vs Nice-to-Haves.
+YOUR TASK: Separate the 'Critical' from the 'Desired'. What are the 2-3 non-negotiable features?
+Example style: "We're building a great picture here. If you had to pick the top 3 absolute non-negotiable 'Must-Have' features for this system, what would they be?"`,
+
+        10: `ROUND 10 — Training & Support Needs.
+YOUR TASK: How tech-savvy is the team? Do they need intensive training or just a basic walkthrough?
+Example style: "Final piece of the puzzle — how comfortable is your team with new technology? Would you prefer a hands-on training series, or is a simple documentation/video guide enough for them?"`,
     };
 
     let turnPrompt;
     if (isOpen) {
         turnPrompt = `Initialize the discovery session for ${cli.company}. Greet them warmly (use their company name), briefly mention you've done research on their business, and ask ONE open question: "What's the main challenge you're hoping to solve today?"`;
-    } else if (rn >= 5) {
+    } else if (rn >= 10) {
         turnPrompt = `You have now gathered rich information across ${rn} rounds of conversation. 
 CRITICAL: Output REQUIREMENTS_COMPLETE followed by a COMPLETE JSON object with ALL fields populated from the conversation. Do not leave any field empty.
 
@@ -789,7 +815,7 @@ CRITICAL RULES:
         turnPrompt = guide;
     }
 
-    return await gem(turnPrompt, rn >= 5 ? 2000 : 1000, 0.7, rn >= 5, convo, sys);
+    return await gem(turnPrompt, rn >= 10 ? 2000 : 1000, 0.7, rn >= 10, convo, sys);
 }
 
 /* ── File upload ── */
@@ -911,7 +937,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
     convo.push({ role: 'user', content: msg });
     inp.value = '';
     rn++;
-    updateCov(Math.min(95, 20 + rn * 20));
+    updateCov(Math.min(95, 10 + rn * 8.5));
     showTypingIndicator();
     try {
         const resp = await nextQ();
@@ -920,7 +946,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
         if (resp.includes('REQUIREMENTS_COMPLETE')) {
             const parts = resp.split('REQUIREMENTS_COMPLETE');
             if (parts[0].trim()) addAg(parts[0].trim());
-            reqs = safeJ(parts[1]) || { summary: 'Requirement analysis complete', must_have: ['Zoho One'] };
+            reqs = safeJ(parts[1]) || { summary: 'Requirement analysis complete', must_have: ['Zoho Consultation'] };
             discoveryComplete = true;
             showReqSummary();
         } else if (potentialJson && (potentialJson.must_have || potentialJson.pain_points)) {
@@ -935,18 +961,24 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
     } catch (e) {
         removeTypingIndicator();
         console.error('[nextQ error]', e);
-        if (rn >= 5) {
+        if (rn >= 10) {
             discoveryComplete = true;
-            // Less rigid fallback, reflecting actual generic discovery rather than forcing 'Zoho One Implementation' alone
+            // Less rigid fallback
             reqs = { summary: 'Discovery session concluded.', must_have: ['Project Requirements Gathering', 'Module Configuration'] };
             showReqSummary();
         } else {
-            // Round-specific fallbacks — never the same message twice
+            // Round-specific fallbacks
             const fallbacks = {
                 1: `Thanks for sharing that! Just to understand the scale — roughly how many people would be using this system, and which departments would it cover?`,
                 2: `Got it! What's the single biggest bottleneck this is causing your team right now — is it manual work, missed follow-ups, or lack of visibility?`,
-                3: `That's helpful context. Who would be involved in the final decision on this, and is there a particular timeline or deadline you're working towards?`,
-                4: `Great — and what would success look like in 6 months? What are the 2-3 things the solution absolutely must do for you?`,
+                3: `Walk me through a typical day. How do you currently handle a new lead or customer inquiry from start to finish?`,
+                4: `To make this truly seamless, what other tools do you use? Do we need to sync with your website, WhatsApp, or perhaps an accounting tool like Tally?`,
+                5: `Do you have existing records in Excel or another software that we'd need to migrate into the new Zoho environment?`,
+                6: `When it comes to evaluating and approving this project — who all from your team would be part of the final decision-making process?`,
+                7: `Is there a specific date or business milestone you're aiming for to have this system live?`,
+                8: `If we meet in 6 months and this project is a huge success — what exactly has changed? What's the one metric you'd be most proud to show?`,
+                9: `If you had to pick the top 3 absolute non-negotiable 'Must-Have' features for this system, what would they be?`,
+                10: `How comfortable is your team with new technology? Would you prefer a hands-on training series, or is a simple documentation guide enough?`,
             };
             addAg(fallbacks[rn] || `Thanks for that detail! What else should I know about your requirements — any specific integrations or systems you'd need to connect with?`);
         }
