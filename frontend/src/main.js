@@ -856,14 +856,58 @@ document.getElementById('fileIn').onchange = async (e) => {
 
     try {
         // Process supported documents (PDF, DOCX, TXT) via the robust Python backend parser
-        if (['.pdf', '.docx', '.txt', '.csv'].some(ext => f.name.toLowerCase().endsWith(ext))) {
+        if (['.pdf', '.docx', '.txt', '.csv'].some(ext => f.name.toLowerCase().endsWith(ext)) || f.type.startsWith('application/')) {
+            showLdr(`Analyzing ${f.name}…`, 50);
+            showTypingIndicator();
+
             const parsed = await documents.parse(f);
-            fileContent = parsed.text;
-            if (fileContent.length > 15000) fileContent = fileContent.slice(0, 15000) + '\n...[truncated]';
+            fileContent = parsed.text || "";
+            if (fileContent.length > 15000) fileContent = fileContent.slice(0, 15000);
+            
+            saveFileToMemory(activeClientId, { name: f.name, type: f.type, size: f.size }, fileContent);
+            convo.push({ role: 'user', content: `[File uploaded: ${f.name}]\n\nFile contents:\n${fileContent}` });
+
+            rn++;
+            const sys = `${ZK}\nRESEARCH CONTEXT for ${cli.company}:\n${JSON.stringify(prof)}\nRound: ${rn}/6`;
+
+            const resp = await gem(
+                `Role: Expert Proposal Specialist & Data Analyst.
+The client uploaded a requirement document "${f.name}".
+
+FILE CONTENTS:
+${fileContent.slice(0, 15000)}
+
+INSTRUCTIONS:
+1. Acknowledge the file upload warmly and use the "Expert Proposal Specialist" protocol.
+2. Provide a detailed textural summary of all gathered requirements in 3-4 professional paragraphs.
+3. If the document is comprehensive enough (covers pain points, departments, requirements), output REQUIREMENTS_COMPLETE followed by the full JSON block.
+4. If more info is needed, ask ONE focused follow-up question.
+
+CRITICAL: Extract ALL requirements found and map them to Zoho products.`,
+                2000, 0.5, true, convo, sys
+            );
+            removeTypingIndicator();
+            hideLdr();
+
+            if (!resp) return;
+            const potentialJson = safeJ(resp);
+            if (resp.includes('REQUIREMENTS_COMPLETE')) {
+                const parts = resp.split('REQUIREMENTS_COMPLETE');
+                if (parts[0].trim()) addAg(parts[0].trim());
+                reqs = safeJ(parts[1]) || { summary: fileContent.slice(0, 200), must_have: ['Zoho Implementation'] };
+                discoveryComplete = true;
+                showReqSummary();
+            } else if (potentialJson && (potentialJson.must_have || potentialJson.pain_points)) {
+                reqs = potentialJson;
+                discoveryComplete = true;
+                showReqSummary();
+            } else {
+                addAg(resp);
+                convo.push({ role: 'assistant', content: resp });
+            }
         } else if (f.type.startsWith('image/')) {
-            // For images we can't extract text right now — acknowledge upload, push to convo, and return early.
-            fileContent = `[File: ${f.name} — ${f.type}. No text could be extracted. Client should describe requirements verbally.]`;
-            const ackMsg = `I uploaded a file: ${f.name} (${f.type}). Please acknowledge receipt and ask me ONE focused question about the key requirements it covers.`;
+            fileContent = `[File: ${f.name} — ${f.type}. No text extracted.]`;
+            const ackMsg = `I uploaded an image: ${f.name}. Please acknowledge and ask about its requirements.`;
             convo.push({ role: 'user', content: ackMsg });
             saveFileToMemory(activeClientId, { name: f.name, type: f.type, size: f.size }, fileContent);
             hideLdr();
@@ -874,56 +918,19 @@ document.getElementById('fileIn').onchange = async (e) => {
                 addAg(ackResp);
                 convo.push({ role: 'assistant', content: ackResp });
             }
-            e.target.value = '';
-            return;
         } else {
-            fileContent = await readText(f);
-            if (fileContent.length > 8000) fileContent = fileContent.slice(0, 8000) + '\n...[truncated]';
-        }
-
-        saveFileToMemory(activeClientId, { name: f.name, type: f.type, size: f.size }, fileContent);
-        convo.push({ role: 'user', content: `[File uploaded: ${f.name}]\n\nFile contents:\n${fileContent}` });
-
-        hideLdr();
-        showLdr('Analysing document & suggesting solutions…');
-        showTypingIndicator();
-        rn++;
-        const sys = `${ZK}\nRESEARCH CONTEXT for ${cli.company}:\n${JSON.stringify(prof)}\nRound: ${rn}/6`;
-
-        // Enhanced prompt — pass full convo history so AI has full context (Fix 1)
-        const resp = await gem(
-            `The client uploaded a requirement document "${f.name}".\n\nFILE CONTENTS:\n${fileContent}\n\nINSTRUCTIONS:\n1. Acknowledge the file upload warmly\n2. Briefly summarise the KEY requirements found (2-3 bullet points)\n3. Suggest specific Zoho products that match each requirement\n4. If the document is comprehensive enough (covers pain points, departments, requirements), output REQUIREMENTS_COMPLETE followed by the full JSON with ALL fields populated\n5. If more info is needed, ask ONE focused follow-up question about what's missing\n\nCRITICAL: If the file contains clear business requirements, DO extract them into REQUIREMENTS_COMPLETE JSON. Treat the file as a primary source of truth. Map every requirement to relevant Zoho products. IMPORTANT DETAILS: When building the JSON, you MUST populate arrays with highly detailed, contextual descriptions natively from the text (3-8 descriptive items per array). Do not use brief 1-2 word summaries! Be extremely detailed.`,
-            2000, 0.5, false, convo, sys
-        );
-        removeTypingIndicator();
-        hideLdr();
-
-        const potentialJson = safeJ(resp);
-        if (resp.includes('REQUIREMENTS_COMPLETE')) {
-            const parts = resp.split('REQUIREMENTS_COMPLETE');
-            if (parts[0].trim()) addAg(parts[0].trim());
-            reqs = safeJ(parts[1]) || { summary: fileContent.slice(0, 200), must_have: ['Zoho Implementation'] };
-            discoveryComplete = true;
-            showReqSummary();
-        } else if (potentialJson && (potentialJson.must_have || potentialJson.pain_points)) {
-            // Robustly catch if generated JSON missed the exact REQUIREMENTS_COMPLETE keyword
-            reqs = potentialJson;
-            discoveryComplete = true;
-            showReqSummary();
-        } else {
-            addAg(resp);
-            convo.push({ role: 'assistant', content: resp });
+            addAg(`Unsupported file type: ${f.name}. Please provide a PDF, DOCX, or text file.`);
+            hideLdr();
         }
     } catch (err) {
         console.error('[Document Analysis Error]', err);
         removeTypingIndicator();
         hideLdr();
         const errDetails = err.message || (err.data && err.data.detail) || "Unknown Error";
-        const isAI = errDetails.includes('API') || errDetails.includes('Resource') || errDetails.includes('429');
-        if (isAI) {
-           addAg(`I was able to read your document <strong>${f.name}</strong> successfully, but I hit a temporary AI rate limit while analyzing it. <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span><br/><br/>Could you wait a minute and try again? Or describe what the document covers?`, { noEscape: true });
+        if (errDetails.includes('429')) {
+             addAg(`I hit a rate limit while analyzing <strong>${f.name}</strong>. Please wait a minute and try again.`, { noEscape: true });
         } else {
-            addAg(`<strong>CRITICAL ERROR: Unable to read attachment. Please ensure 'File Search' is enabled in the agent settings or paste the text directly.</strong> <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error Code: PARSE_NULL_OR_FAILED</span>`, { noEscape: true });
+             addAg(`<strong>CRITICAL ERROR: Unable to read attachment. Please ensure 'File Search' is enabled in the agent settings or paste the text directly.</strong>`, { noEscape: true });
         }
     }
     e.target.value = '';
@@ -969,6 +976,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
     try {
         const resp = await nextQ();
         removeTypingIndicator();
+        if (!resp) return; 
         const potentialJson = safeJ(resp);
         if (resp.includes('REQUIREMENTS_COMPLETE')) {
             const parts = resp.split('REQUIREMENTS_COMPLETE');
