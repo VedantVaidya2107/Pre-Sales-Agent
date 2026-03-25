@@ -6,6 +6,6 @@ pydantic
 requests
 python-docx
 PyPDF2
+python-multipart
 supabase
-python-dotenv
 pycryptodome
