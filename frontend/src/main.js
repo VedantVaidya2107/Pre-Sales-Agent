@@ -83,17 +83,18 @@ QUALITY CHECKLIST:
 ✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED ✓ SUMMARY BEFORE COMPLETION`;
 
 /* ══ PROPOSAL SPECIALIST MODE (FOR DOCUMENT GENERATION) ══ */
-const PROPOSAL_SPECIALIST_PROMPT = `You are an expert Proposal Writer at Fristine Infotech. Your goal is to draft high-converting, deeply technical proposals that are uniquely tailored to the client's needs.
+const PROPOSAL_SPECIALIST_PROMPT = `Role: Expert Proposal Specialist.
 
-CORE GUIDELINES:
-1. STRUCTURE: Use the professional, sectioned flow of a high-end technical proposal.
-2. TECHNICAL GRANULARITY: Each section must be comprehensive. Avoid high-level summaries. Detail specific sub-features, nested workflows, and technical dependencies.
-3. THE "ANTI-STATIC" RULE: Do not simply swap out names. Analyze the client’s specific problem and rewrite the "Solution" and "Value Proposition" sections to address their unique pain points with technical precision.
-4. DETAIL LEVEL: If the project is complex, your output should be equivalent to a 10-15 page technical implementation plan. Be extremely granular in the "Detailed Scope of Work".
-5. VARIETY & POLISH: Use diverse, sophisticated sentence structures. Use "Our architecture leverages...", "To mitigate risk during sync...", etc.
+Core Operational Protocol:
+1. Mandatory File Parsing: Before drafting, you MUST access and extract all text from the attached PDF/DOCX. You are strictly prohibited from using generic placeholders. 
+2. Extraction Proof: Your first output must be a summary identifying the Client Name, Project Goals, and 3-5 specific technical requirements found in the attachment.
+3. Template Integration: Use the professional Fristine template as a skeleton. Do not "copy-paste." You must rewrite the "Solution," "Value Proposition," and "Technical Scope" sections to directly address the extracted requirements.
+4. Detail & Expansion Rule: Avoid brief summaries. Every main section must be long-form and detailed (minimum 3 paragraphs per section). If a requirement involves Zoho CRM, Analytics, Projects, or Desk, provide a granular technical implementation plan for that module.
+5. Grammar & Tone: Use active voice, professional business English, and perfect grammar. Eliminate all robotic or repetitive phrasing.
+6. Zoho Data Sync: At the end of every proposal, generate a structured summary table for Zoho CRM including: Lead Name, Estimated Project Value, and Phase-wise Timeline.
+7. Error Handling: If you cannot access the attachment content, state: "CRITICAL ERROR: Unable to read requirements document. Please provide a text summary."
 
-YOUR TASK:
-Using the captured requirements, generate an exhaustive technical proposal that serves as a definitive implementation blueprint.`;
+Task: Analyze the attached requirement document and generate a comprehensive, highly customized technical proposal using the established brand template.`;
 
 /* ══ BOOT ══ */
 async function init() {
@@ -923,7 +924,7 @@ document.getElementById('fileIn').onchange = async (e) => {
         if (isAI) {
            addAg(`I was able to read your document <strong>${f.name}</strong> successfully, but I hit a temporary AI rate limit while analyzing it. <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span><br/><br/>Could you wait a minute and try again? Or describe what the document covers?`, { noEscape: true });
         } else {
-           addAg(`I encountered a technical issue reading the file <strong>${f.name}</strong>. <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span><br/><br/>Could you briefly summarise its key requirements?`, { noEscape: true });
+            addAg(`<strong>CRITICAL ERROR: Unable to read requirements document. Please provide a text summary.</strong> <br/><br/><span style="color:#d32f2f;font-weight:600;font-size:12px;">Error: ${errDetails}</span>`, { noEscape: true });
         }
     }
     e.target.value = '';
@@ -1234,26 +1235,34 @@ async function buildSolution() {
         
         // We now ask the AI to generate the ENTIRE content for the proposal sections
         const systemPrompt = `${PROPOSAL_SPECIALIST_PROMPT}\n\nCLIENT CONTEXT: ${JSON.stringify(reqs)}`;
-        const userPrompt = `Generate an EXHAUSTIVE TECHNICAL ZOHO PROPOSAL. 
+        const userPrompt = `Generate a PROFESSIONAL TECHNICAL ZOHO PROPOSAL following the Expert Proposal Specialist Protocol. 
 RETURN ONLY RAW JSON. NO MARKDOWN. 
 SCHEMA: {
+    "extraction_proof": {
+        "client_name": "...",
+        "project_goals": "...",
+        "technical_requirements": ["Requirement 1", "Requirement 2", "Requirement 3"]
+    },
     "title": "Clear catch technical title",
-    "executive_summary": "Persuasive 4-5 paragraph executive summary following the Anti-Static rule, deeply aligning Fristine's expertise with client goals.",
-    "core_requirements": ["list of 10-12 granular requirements identified"],
+    "executive_summary": "Extremely detailed 4-5 paragraph executive summary (Min 3 paragraphs) addressing specific pain points.",
+    "core_requirements": ["10-12 granular requirements"],
     "solution_architecture": [
-        {"phase": "1", "name": "...", "objective": "Detailed objective including technical components"}
+        {"phase": "1", "name": "...", "objective": "Detailed implementation objective (Min 2 paragraphs of context expected in rendering)"}
     ],
     "detailed_scope": [
-        {"module": "Technical Module Name", "capabilities": ["8-10 specific technical capabilities per module"], "persona": "Impacted Stakeholders"}
+        {"module": "Technical Module Name", "capabilities": ["8-10 specific technical capabilities"], "persona": "Stakeholders"}
     ],
     "integrations": [
-        {"name": "...", "benefit": "...", "method": "API / Webhook / Native / Custom Middleware Detail"}
+        {"name": "...", "benefit": "...", "method": "Technical Method Detail"}
     ],
     "commercial_phases": [
-        {"name": "Discovery & Requirement Finalization", "amount": "₹ (Quoted)", "model": "T&M"},
-        {"name": "Configuration & Workflow Build", "amount": "₹ (Quoted)", "model": "Fixed"},
-        {"name": "UAT & Deployment", "amount": "₹ (Quoted)", "model": "Fixed"}
-    ]
+        {"name": "Discovery", "amount": "₹ (Quoted)", "model": "T&M"}
+    ],
+    "zoho_data_sync": {
+        "lead_name": "...",
+        "estimated_value": "₹ (Quoted)",
+        "timeline": "Phase-wise timeline summary"
+    }
 }`;
         const res = await gem(userPrompt, 3000, 0.6, true, [], systemPrompt);
         sol = safeJ(res);
@@ -1348,6 +1357,23 @@ ul.bullets li{font-size:15px;color:var(--slate);margin-bottom:12px;position:rela
   </div>
 </div>
 
+<!-- Page 1: Extraction Proof (Rule #2) -->
+<div class="page" style="padding:40px 80px">
+    <div class="section" style="padding:40px 0">
+        <div class="sec-num">00</div>
+        <div class="sec-head"><div class="sec-title">Extraction <span>Proof</span></div></div>
+        <p style="margin-bottom:20px;color:var(--slate)"><em>Requirement document analysis for <strong>${sol.extraction_proof?.client_name || cli.company}</strong>:</em></p>
+        <div style="background:var(--bg);padding:32px;border-radius:16px;border:1px solid var(--brd)">
+            <p style="font-weight:700;margin-bottom:8px;color:var(--navy)">Primary Project Goals:</p>
+            <p style="margin-bottom:20px;color:var(--slate)">${sol.extraction_proof?.project_goals || 'See requirements below.'}</p>
+            <p style="font-weight:700;margin-bottom:8px;color:var(--navy)">Identified Technical Requirements:</p>
+            <ul class="bullets" style="margin-bottom:0">
+                ${(sol.extraction_proof?.technical_requirements || []).map(r => `<li>${r}</li>`).join('')}
+            </ul>
+        </div>
+    </div>
+</div>
+
 <div class="section">
   <div class="sec-num">01</div>
   <div class="sec-head"><div class="sec-title">The <span>Fristine</span> Advantage</div></div>
@@ -1419,6 +1445,22 @@ ul.bullets li{font-size:15px;color:var(--slate);margin-bottom:12px;position:rela
   <p style="font-weight:700;color:var(--navy);font-size:14px;margin-bottom:8px">Managed Services (Optional)</p>
   <p style="font-size:13px;margin-bottom:12px">80 Hours/Month support | SLA-driven response | L1, L2, L3 Support coverage.</p>
   <table style="width:50%"><tbody><tr style="background:var(--navy);color:#fff"><td style="font-weight:700">Monthly Support Fee</td><td class="price-tag" contenteditable="true" style="color:#FFF">₹ (Quoted)</td></tr></tbody></table>
+</div>
+
+<!-- Zoho CRM Data Sync (Rule #6) -->
+<div class="section" style="margin-top:40px;padding-top:40px;border-top:4px solid var(--bg)">
+  <div class="sec-head"><div class="sec-title">Zoho CRM <span>Data Sync</span></div></div>
+  <p style="margin-bottom:16px">The following summary table is structured for direct synchronization with internal Zoho CRM lead management systems.</p>
+  <table style="background:var(--white);border:2px solid var(--navy)">
+    <thead style="background:var(--navy);color:white"><tr><th style="color:white">Lead Name</th><th style="color:white">Estimated Project Value</th><th style="color:white">Phase-wise Timeline</th></tr></thead>
+    <tbody>
+      <tr>
+        <td style="font-weight:800;color:var(--navy)">${sol.zoho_data_sync?.lead_name || cli.company}</td>
+        <td style="color:var(--primary);font-weight:800;font-size:16px">${sol.zoho_data_sync?.estimated_value || '₹ (Quoted)'}</td>
+        <td style="color:var(--slate);font-weight:500">${sol.zoho_data_sync?.timeline || 'Implementation over 4-6 months'}</td>
+      </tr>
+    </tbody>
+  </table>
 </div>
 
 <div class="section">
