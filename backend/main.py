@@ -13,12 +13,16 @@ app = FastAPI(title="Fristine Presales Backend")
 # CORS Middleware
 origins = [
     os.environ.get("FRONTEND_URL", "http://localhost:5173"),
+    "https://vedantvaidya2107.github.io",
+    "https://vedantvaidya2107.github.io/Pre-Sales-Agent",
     "http://localhost:4173",
     "http://localhost:5174",
     "http://localhost:5175",
 ]
 
 is_production = os.environ.get("ENV", "development").lower() == "production"
+print(f"[CORS] Environment: {'Production' if is_production else 'Development'}")
+print(f"[CORS] Allowed Origins: {origins if is_production else '*'}")
 
 app.add_middleware(
     CORSMiddleware,

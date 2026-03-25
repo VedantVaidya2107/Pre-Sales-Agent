@@ -98,14 +98,20 @@ async function init() {
 
 async function bootStaffLogin() {
     showLdr('Connecting to portal…');
+    const wakeUpTimer = setTimeout(() => {
+        setSS('ok', 'Render service is cold-starting... please wait ~60s');
+    }, 6000);
+
     try {
         allClients = await clients.list();
+        clearTimeout(wakeUpTimer);
         setSS('ok', `Connected · ${allClients.length} clients loaded`);
         const activeAgent = localStorage.getItem('f_active_agent');
         if (activeAgent) {
             startStaffPortal(activeAgent);
         }
     } catch (e) {
+        clearTimeout(wakeUpTimer);
         setSS('er', 'Could not connect to backend — is the server running?');
         console.error('[Boot]', e);
     }
@@ -114,9 +120,15 @@ async function bootStaffLogin() {
 
 async function bootClientSession(clientId) {
     showLdr('Loading your session…');
+    const wakeUpTimer = setTimeout(() => {
+        showLdr('Server is waking up (Render free tier may take a moment)...');
+    }, 6000);
+
     try {
         allClients = await clients.list();
+        clearTimeout(wakeUpTimer);
     } catch (e) {
+        clearTimeout(wakeUpTimer);
         console.warn('[Boot] client list failed', e);
     }
 
