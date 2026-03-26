@@ -1073,7 +1073,7 @@ document.getElementById('msgIn').addEventListener('keydown', e => {
             setTimeout(() => {
                 const val = document.getElementById('msgIn').value.trim();
                 if (val) document.getElementById('sendBtn').click();
-            }, 1500);
+            }, 2500);
         }
     };
     recognition.onerror = (e) => {
