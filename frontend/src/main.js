@@ -25,7 +25,7 @@ const ZK = `You are a high-performing Senior Presales Solutions Architect at Fri
 YOUR COMPANY — FRISTINE INFOTECH:
 - India's leading Premium & Advanced Zoho Partner (Headquartered in Pune)
 - Awards: Zoho Creator Partner Award 2021 — Innovator of the Year & Regional Champion (ANZ)
-- Expertise: 7+ years of experience, 70+ global projects with high customer satisfaction.
+- Expertise: 10+ years of experience, 200+ global projects with high customer satisfaction.
 - Core Services: End-to-end Zoho One, CRM, Desk, Projects, and Analytics implementations.
 - Specialized Mastery: Certified Designers for Zoho Canvas (Advanced UI/UX customization in CRM).
 - Custom SaaS: Product development via Zoho Creator (Low-code specialists).
@@ -33,76 +33,60 @@ YOUR COMPANY — FRISTINE INFOTECH:
 YOUR MISSION:
 Conduct a strategic discovery session. Move beyond "features" and uncover "business value". You must ask a MINIMUM of 10-12 small/medium targeted questions to deeply understand the client's business requirement before concluding. Use the MEDDPICC framework naturally.
 
-SPECIALIZED DOMAIN: CUSTOMER COMPLAINT MANAGEMENT SYSTEM (CCMS)
-If the client mentions "complaints", "CCMS", "quality issues", or "after-sales service", you must guide them through the Fristine CCMS Reference Architecture:
-1. Intake: Digital logging with SAP S/4HANA validation.
-2. Screening: PAG Tech Desk screening.
-3. FRT Stage: Field visit decision & checklists.
-4. Detailed Investigation: Specialist groups (QA, TG, Logistics).
-5. CIR & Approval: DOP approval workflows.
-6. Settlement & Returns: SAP sync for RE/GRN.
-7. CAPA & Recovery: Parallel Corrective action.
+SPECIALIZED DOMAINS:
+1. MANUFACTURING & 3D TECH: Focus on Reseller Portals, Customer Portals, and Inventory/Project sync (e.g. Solid Plus 3D Tech use cases).
+2. HEALTHCARE & HOSPITALS: Expertise in transitioning from On-Premise SAP to Zoho. Focus on Hospital Information System (HIS) integrations, WhatsApp Haptik bots, and patient-centric CRM flows (e.g. Reliance Hospitals use cases).
+3. CUSTOMER COMPLAINT MANAGEMENT SYSTEM (CCMS):
+   - Intake (SAP S/4HANA validation), Screening (Tech Desk), FRT Stage (Field Checklists), Detailed Investigation (QA/Logistics), CIR/DOP Approval, Settlement (RE/GRN sync), and CAPA.
 
 ZOHO PRODUCTS (FULL SUITE):
-• Zoho One: The all-in-one suite ($37/user/month).
-• Zoho CRM / CRM Plus: Sales & Marketing automation.
+• Zoho One: The all-in-one suite.
+• Zoho CRM / CRM Plus: Sales & Marketing automation (Canvas-driven).
 • Zoho Books / Inventory / Finance Plus: Accounting & Operations.
 • Zoho People / Recruit: HRMS.
 • Zoho Projects / Sprints: Project Management.
-• Zoho Creator: Custom low-code applications.
+• Zoho Creator: Custom low-code portals (Reseller/Customer).
 • Zoho Desk / Assist: Customer Support.
 • Zoho Analytics: BI & Data visualisation.
 
-⚡ DISCOVERY STRATEGY:
-1. ASK MINIMUM 10 QUESTIONS: Do not conclude early. Dig deep into workflows.
-2. TAILOR RECOMMENDATIONS: Do not just suggest Zoho One. If they only need accounting, suggest Zoho Books. If they need a custom app, suggest Zoho Creator.
-3. EXTRACT MULTIPLE INTENTS: Parse compound statements into structured requirements.
-4. RECOGNIZE IMPLICIT REQUIREMENTS: Infer needs like scalability, automation, and multi-currency.
+⚡ DISCOVERY STRATEGY (EFFICIENCY FOCUS):
+1. MAXIMIZE QUESTION DENSITY: Ask 2-3 related sub-questions per turn to gather info faster.
+2. ADAPTIVE COMPLETION: If you have a clear picture (Pain points, Must-haves, Integrations, Timeline), you may conclude as early as Round 3-4.
+3. PRE-EMPTIVE MAPPING: Suggest Zoho products early based on their initial reply to validate fit.
+4. INTEGRATION-FIRST: Always ask about ERPs (SAP/HIS).
 
 CONSULTATION RULES:
 1. BE WARM & CONVERSATIONAL: Talk like a helpful colleague. 2-4 sentences max.
 2. ONE QUESTION AT A TIME: Focus on ONE thing. Acknowledge input first.
-3. CCMS GUIDANCE: If CCMS is the focus, ensure you ask about "SAP Integration", "Field Visit requirements", and "DOP Approval thresholds".
+3. HEALTHCARE CONTEXT: If Hospitals, ensure you ask about "Patient Experience", "HIS Integration", and "SAP Migration concerns".
 4. JSON TRIGGER: Only after 10-12 meaningful exchanges, provide a detailed textual summary of the gathered requirements in 3-4 professional paragraphs, then output the exact keyword REQUIREMENTS_COMPLETE followed by the JSON block.
-{
-  "business_overview": "Detailed description of goals and challenges.",
-  "departments": ["All departments involved"],
-  "current_tools": ["Existing systems"],
-  "pain_points": ["Specific bottlenecks identified"],
-  "must_have": ["Critical requirements"],
-  "nice_to_have": ["Desired but not critical"],
-  "automation_opportunities": ["Redundant tasks to automate"],
-  "integrations": ["SAP, WhatsApp, Website, etc."],
-  "success_metrics": ["Quantity and Quality targets"],
-  "zoho_products": ["Exact Zoho products matched to needs"],
-  "user_count": 50,
-  "industry": "Industry Type",
-  "summary": "Full solution architecture summary."
-}
-
-FILE ATTACHMENTS: Whenever a file is attached, your first priority is to extract all text and key requirements before drafting a response. If you cannot read the file, immediately notify the user rather than guessing.
 
 ⚡ WHY FRISTINE? (UNIQUE VALUE PROPOSITIONS)
 1. ADVANCED TIER PARTNER: Early access to Zoho features and top-tier direct support.
-2. CANVAS SPECIALISTS: Only a few partners globally can build bespoke, "Spotify-like" modern interfaces inside Zoho CRM via Canvas.
-3. CUSTOM-FIT METHODOLOGY: 100% bespoke solutions based on deep Discovery, avoiding generic templates.
-4. MANUFACTURING EXPERTS: Deep specialization in CRM for Manufacturing and Digital Transformation for logistics.
+2. CANVAS SPECIALISTS: Bespoke, modern interfaces inside Zoho CRM via Canvas.
+3. MANUFACTURING & HEALTHCARE EXPERTS: Deep specialization in ERP transitions (SAP) and Hospital Information Systems.
 
 QUALITY CHECKLIST: 
-✓ Acknowledge input ✓ Natural tone ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED ✓ SUMMARY BEFORE COMPLETION ✓ MENTION FRISTINE DOMAIN EXPERTISE`;
+✓ Acknowledge input ✓ ONE question ✓ MEDDPICC context ✓ AT LEAST 10 QUESTIONS ✓ ALL ZOHO APPS CONSIDERED ✓ SUMMARY BEFORE COMPLETION ✓ MENTION ERP INTEGRATION EXPERTISE`;
 
 /* ══ PROPOSAL SPECIALIST MODE (FOR DOCUMENT GENERATION) ══ */
-const PROPOSAL_SPECIALIST_PROMPT = `Role: Expert Proposal Specialist & Data Analyst.
+const PROPOSAL_SPECIALIST_PROMPT = `Role: Senior Solutions Architect & Expert Proposal Writer.
 
-Critical Instruction (File Handling):
-1. Tool Priority: Before responding, you MUST parse and analyze the attached PDF/DOCX. You are strictly prohibited from using generic placeholders. 
-2. The "Null" Fix: If the requirement extraction returns a null value or an error, do NOT attempt to process it with code logic. Instead, immediately trigger the error message: "CRITICAL ERROR: Unable to read attachment. Please ensure 'File Search' is enabled in the agent settings or paste the text directly."
-3. Requirement Extraction: Upon successful parsing, you must list: Client Name, Primary Goal, and 3-5 Technical Requirements found in the document.
-4. Drafting Protocol: Use the professional Fristine template as a skeleton. Do not "copy-paste." You must rewrite the "Solution" and "Value Proposition" sections to be long-form (3+ paragraphs each), detailing specific integrations for Zoho CRM, Analytics, Projects, or Desk as mentioned in the requirements.
-5. Grammar & Tone: Use active voice, professional business English, and perfect grammar.
-6. Zoho Data Sync: Conclude with a structured summary table for Zoho CRM: Lead Name, Estimated Value, and Implementation Timeline.
+YOUR MISSION:
+Draft a HIGH-CONVERTING, long-form technical proposal based on Fristine's "Anti-Static" methodology. You are strictly prohibited from using brief summaries or generic placeholders.
 
-Task: Analyze the attached requirement document and generate a comprehensive, highly customized technical proposal with Data Analyst precision.`;
+THE "ANTI-STATIC" RULE (ULTRA-DETAILED):
+1. NO PLACEHOLDERS: Analyze the client's specific problem and rewrite every section from scratch.
+2. EXPAND & ELABORATE: Every main section (Executive Summary, Solution Architecture, Detailed Scope) must be LONG-FORM.
+3. MINIMUM DEPTH: 
+   - Executive Summary: Minimum 400 words (4-5 detailed paragraphs).
+   - Solution Architecture: Detailed technical workflow with Phase-wise objectives (Min 2 paragraphs per phase).
+   - Detailed Scope: Granular module-by-module breakdown (e.g. Zoho CRM Modules, Fields, Field Permissions, Custom Buttons).
+4. INTEGRATION FOCUS: Deep dive into SAP (S/4HANA), HIS (Hospital Information Systems), WhatsApp (Haptik), and Telephony sync logic.
+5. ZOHO CANVAS DESIGN: Reference custom UI/UX design via Canvas for a "Spotify-like" user experience.
+6. THE NULL FIX: If document parsing returns null, trigger the critical error message immediately.
+
+Task: Generate a comprehensive, highly customized technical proposal with Data Analyst precision. Focus on the Reliance Hospitals (SAP transition) and Solid Plus 3D Tech (Portal) domain standards.`;
 
 /* ══ BOOT ══ */
 async function init() {
@@ -679,7 +663,7 @@ async function startSession() {
     document.getElementById('sbi').textContent    = cli.industry || 'Detecting…';
     document.getElementById('sbs').textContent    = cli.size || '—';
 
-    const restored = activeClientId ? loadConversationMemory(activeClientId) : false;
+    const restored = activeClientId ? await loadConversationMemory(activeClientId) : false;
 
     if (restored && convo.length > 0) {
         setStg(0, 'done'); setStg(1, 'done');
@@ -768,90 +752,42 @@ async function nextQ(isOpen = false) {
     // Each round has a clear, distinct focus — the AI must acknowledge what was
     // just said, then move to the next topic. It must NEVER ask something already answered.
     const roundGuide = {
-        1: `ROUND 1 — Current tools & team size.
-ALREADY DISCUSSED: Review the conversation above. Do NOT repeat anything already asked.
-YOUR TASK: Acknowledge what the user just shared warmly. Then ask about the NUMBER OF USERS/TEAM SIZE and which specific DEPARTMENTS will use the new system (e.g. Sales, Finance, Operations, HR).
-Example style: "Got it — that sounds really frustrating! Just to get a sense of scale, roughly how many people would be using this system, and which teams would it span?"`,
+        1: `ROUND 1 — Scope & Pain Points.
+YOUR TASK: Acknowledge their reply. Ask about the TEAM SIZE/DEPARTMENTS and the SINGLE BIGGEST bottleneck costing them time or money today.
+Example: "I understand. To scope this correctly, roughly how many users and which teams (Sales/Finance/Ops) will be involved? Also, what's the #1 pain point we need to kill first?"`,
 
-        2: `ROUND 2 — Biggest pain point & what's failing today.
-ALREADY DISCUSSED: Review the conversation above carefully. Do NOT ask anything already answered.
-YOUR TASK: Acknowledge the user's last reply. Then dig into the SINGLE BIGGEST pain point — what is costing them the most time or money right now? What happens if this problem is NOT solved?
-Example style: "That makes sense — siloed systems are a real bottleneck. What's the one thing causing the most pain day-to-day? Is it manual data entry, missed follow-ups, slow reporting, or something else?"`,
+        2: `ROUND 2 — Workflows & Integrations.
+YOUR TASK: Acknowledge the scale. Ask them to walk through their DAILY WORKFLOW and mention any EXISTING TOOLS (Tally/SAP/WhatsApp) we need to sync with.
+Example: "Clear. Walk me through a typical day from lead to delivery. Also, which existing tools (like SAP or Tally) must this new system talk to?"`,
 
-        3: `ROUND 3 — Core Workflows & Daily Routine.
-YOUR TASK: Acknowledge their pain points. Ask about their current daily workflow. How do they handle a lead or a customer today from first touch to final delivery?
-Example style: "I see — manual tracking really kills productivity. Walk me through a typical day. How do you currently handle a new lead or customer inquiry from start to finish?"`,
+        3: `ROUND 3 — Data, Timeline & Decision.
+YOUR TASK: Ask about DATA MIGRATION needs, the desired GO-LIVE DATE, and WHO handles the final approval.
+Example: "Got it. Do you have legacy data in Excel to migrate? Also, what's your target live date and who else from your leadership team will be part of the final sign-off?"`,
 
-        4: `ROUND 4 — Integration Requirements.
-YOUR TASK: Acknowledge the workflow. Ask about other tools they use that need to "talk" to the new system (e.g. Website, WhatsApp, Email, ERP, Accounting software like Tally/SAP).
-Example style: "Clear workflow. To make this truly seamless, what other tools do you use? Do we need to sync with your website, WhatsApp, or perhaps an accounting tool like Tally?"`,
+        4: `ROUND 4 — Success Metrics & Must-Haves.
+YOUR TASK: Ask what SUCCESS looks like (metrics) and identify the top 3 NON-NEGOTIABLE features.
+Example: "We're nearly there. If this is a huge success in 6 months, what specific metric improved? Finally, what are your top 3 'must-have' features?"`,
 
-        5: `ROUND 5 — Data Migration & Legacy Data.
-YOUR TASK: Ask about their existing data. Do they have thousands of records in Excel or another CRM that need to be moved? This is crucial for scoping.
-Example style: "Data is the lifeblood of any system. Do you have existing records in Excel or another software that we'd need to migrate into the new Zoho environment?"`,
-
-        6: `ROUND 6 — Decision Process & Stakeholders.
-YOUR TASK: Identify WHO is involved in the decision. Is it just the owner, or are there HODs from Sales/IT/Finance involved?
-Example style: "That's helpful context. When it comes to evaluating and approving this project — who all from your team would be part of the final decision-making process?"`,
-
-        7: `ROUND 7 — Timeline & Urgent Deadlines.
-YOUR TASK: Is there an event or a date driving this? Why now?
-Example style: "Got it. Is there a specific date or business milestone you're aiming for to have this system live? What's driving the timeline for this implementation?"`,
-
-        8: `ROUND 8 — Success Metrics & KPIs.
-YOUR TASK: What does 'Success' look like? If we meet in 6 months, what numbers should have improved (e.g. 20% more sales, 50% faster response)?
-Example style: "If we fast-forward 6 months and this project is a huge success — what exactly has changed? What's the one metric you'd be most proud to show your team?"`,
-
-        9: `ROUND 9 — Must-Haves vs Nice-to-Haves.
-YOUR TASK: Separate the 'Critical' from the 'Desired'. What are the 2-3 non-negotiable features?
-Example style: "We're building a great picture here. If you had to pick the top 3 absolute non-negotiable 'Must-Have' features for this system, what would they be?"`,
-
-        10: `ROUND 10 — Training & Support Needs.
-YOUR TASK: How tech-savvy is the team? Do they need intensive training or just a basic walkthrough?
-Example style: "Final piece of the puzzle — how comfortable is your team with new technology? Would you prefer a hands-on training series, or is a simple documentation/video guide enough for them?"`,
+        5: `ROUND 5 — Training & Final Details.
+YOUR TASK: Ask about user TECH-SAVVINESS (training needs) and any remaining constraints/budget info.
+Example: "Last step — how tech-savvy is your team for training purposes? Also, are there any specific budget or technical constraints I should document?"`,
     };
 
     let turnPrompt;
     if (isOpen) {
         turnPrompt = `Initialize the discovery session for ${cli.company}. Greet them warmly (use their company name), briefly mention you've done research on their business, and ask ONE open question: "What's the main challenge you're hoping to solve today?"`;
     } else if (rn >= 10) {
-        turnPrompt = `You have now gathered rich information across ${rn} rounds of conversation. 
-CRITICAL: Output REQUIREMENTS_COMPLETE followed by a COMPLETE JSON object with ALL fields populated from the conversation. Do not leave any field empty.
-
-{
-  "business_overview": "Comprehensive 2-3 sentence narrative",
-  "departments": ["All departments mentioned"],
-  "current_tools": ["All tools/systems mentioned"],
-  "pain_points": ["Every pain point — be thorough"],
-  "must_have": ["All must-have requirements"],
-  "nice_to_have": ["Nice-to-have features"],
-  "automation_opportunities": ["Automation needs identified"],
-  "integrations": ["All integrations needed"],
-  "success_metrics": ["Success metrics per stakeholder"],
-  "stakeholders": {
-    "economic_buyer": "Who approves the purchase",
-    "champion": "Internal project driver",
-    "influencers": ["Other influencers"]
-  },
-  "timeline": "Timeline mentioned",
-  "budget_info": "Budget range or constraints",
-  "zoho_products": ["Recommended Zoho products"],
-  "user_count": 0,
-  "industry": "Industry",
-  "summary": "One comprehensive sentence"
-}`;
+        turnPrompt = `You have now gathered rich information across 10 rounds. 
+CRITICAL: Provide a detailed 3-4 paragraph summary of ALL gathered requirements in natural language. 
+Then, output exactly: REQUIREMENTS_COMPLETE followed by the full JSON object.`;
     } else {
-        // Use the round-specific guide, fall back to a generic progressive prompt
         const guide = roundGuide[rn] || `ROUND ${rn} — Continue discovery.
-CRITICAL RULES:
-1. Read the FULL conversation history above carefully.
-2. Do NOT repeat or rephrase any question already asked.
-3. Acknowledge what the user just said in 1-2 sentences.
-4. Ask ONE NEW question about something not yet covered: integrations needed, data migration concerns, existing vendors, approval process, or specific feature requirements.`;
+If you have enough information to form a solid proposal (Pain points, Must-haves, Integrations, Timeline), you may choose to conclude NOW by Providing a detailed 3-4 paragraph summary and then outputting REQUIREMENTS_COMPLETE followed by the JSON block.
+Otherwise, ask ONE focused follow-up question.`;
         turnPrompt = guide;
     }
 
-    return await gem(turnPrompt, rn >= 10 ? 2000 : 1000, 0.7, rn >= 10, convo, sys);
+    return await gem(turnPrompt, rn >= 8 ? 2000 : 1000, 0.7, rn >= 8, convo, sys);
 }
 
 /* ── File upload ── */
@@ -866,10 +802,9 @@ document.getElementById('fileIn').onchange = async (e) => {
     try {
         // Process supported documents (PDF, DOCX, TXT) via the robust Python backend parser
         if (['.pdf', '.docx', '.txt', '.csv'].some(ext => f.name.toLowerCase().endsWith(ext)) || f.type.startsWith('application/')) {
-            showLdr(`Analyzing ${f.name}…`, 50);
             showTypingIndicator();
 
-            const parsed = await documents.parse(f);
+            const parsed = await documents.parse(activeClientId, f);
             fileContent = parsed.text || "";
             if (fileContent.length > 15000) fileContent = fileContent.slice(0, 15000);
             
@@ -980,7 +915,8 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
     convo.push({ role: 'user', content: msg });
     inp.value = '';
     rn++;
-    updateCov(Math.min(95, 10 + rn * 8.5));
+    updateCov(Math.min(95, 20 + rn * 15)); // Faster progress bar
+    if (rn >= 2) document.getElementById('summarizeBtn').style.display = 'flex'; // Earlier manual summary option
     showTypingIndicator();
     try {
         const resp = await nextQ();
@@ -993,11 +929,13 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             reqs = safeJ(parts[1]) || { summary: 'Requirement analysis complete', must_have: ['Zoho Consultation'] };
             discoveryComplete = true;
             showReqSummary();
+            document.getElementById('summarizeBtn').style.display = 'none';
         } else if (potentialJson && (potentialJson.must_have || potentialJson.pain_points)) {
             // Handle cases where the AI forced JSON output and omitted the keyword
             reqs = potentialJson;
             discoveryComplete = true;
             showReqSummary();
+            document.getElementById('summarizeBtn').style.display = 'none';
         } else {
             addAg(resp);
             convo.push({ role: 'assistant', content: resp });
@@ -1010,6 +948,7 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             // Less rigid fallback
             reqs = { summary: 'Discovery session concluded.', must_have: ['Project Requirements Gathering', 'Module Configuration'] };
             showReqSummary();
+            document.getElementById('summarizeBtn').style.display = 'none';
         } else {
             // Round-specific fallbacks
             const fallbacks = {
@@ -1026,6 +965,37 @@ document.getElementById('sendBtn').addEventListener('click', async () => {
             };
             addAg(fallbacks[rn] || `Thanks for that detail! What else should I know about your requirements — any specific integrations or systems you'd need to connect with?`);
         }
+    }
+});
+
+document.getElementById('summarizeBtn').addEventListener('click', async () => {
+    if (discoveryComplete) return;
+    const btn = document.getElementById('summarizeBtn');
+    btn.disabled = true; btn.style.opacity = '0.5';
+    const msg = "Please provide the final requirements summary and conclude the discovery phase now.";
+    addUs(msg);
+    convo.push({ role: 'user', content: msg });
+    rn = 10; // Force hard threshold
+    showTypingIndicator();
+    try {
+        const resp = await nextQ();
+        removeTypingIndicator();
+        if (resp.includes('REQUIREMENTS_COMPLETE')) {
+            const parts = resp.split('REQUIREMENTS_COMPLETE');
+            if (parts[0].trim()) addAg(parts[0].trim());
+            reqs = safeJ(parts[1]) || { summary: 'Requirement analysis complete', must_have: ['Zoho Consultation'] };
+            discoveryComplete = true;
+            showReqSummary();
+            btn.style.display = 'none';
+        } else {
+            addAg(resp);
+            convo.push({ role: 'assistant', content: resp });
+        }
+    } catch (e) {
+        removeTypingIndicator();
+        console.error('[Summarize error]', e);
+    } finally {
+        btn.disabled = false; btn.style.opacity = '1';
     }
 });
 
@@ -1115,26 +1085,49 @@ document.getElementById('msgIn').addEventListener('keydown', e => {
 })();
 
 /* ══ CONVERSATION MEMORY ══ */
-function saveConversationMemory() {
+async function saveConversationMemory() {
     if (!activeClientId) return;
+    // Local backup
     localStorage.setItem(`session_${activeClientId}`, JSON.stringify({
         convo, reqs, sol, prof, rn, fileContent: fileContent.slice(0, 4000), discoveryComplete, ts: Date.now()
     }));
+    // Supabase sync
+    try {
+        await conversations.save(activeClientId, convo, rn, discoveryComplete);
+    } catch (e) { console.warn('[Sync] Conversation failed', e); }
 }
 
-function loadConversationMemory(clientId) {
+async function loadConversationMemory(clientId) {
+    // 1. Try local storage first for speed
     const saved = localStorage.getItem(`session_${clientId}`);
-    if (!saved) return false;
+    if (saved) {
+        try {
+            const m = JSON.parse(saved);
+            if (Date.now() - m.ts < 2 * 3600000) { // If fresh (2h), use local
+                ({ convo, reqs, sol, prof, rn, fileContent, discoveryComplete } = {
+                    convo: m.convo || [], reqs: m.reqs || null, sol: m.sol || null,
+                    prof: m.prof || null, rn: m.rn || 0,
+                    fileContent: m.fileContent || '', discoveryComplete: m.discoveryComplete || false
+                });
+                return true;
+            }
+        } catch {}
+    }
+
+    // 2. Try Supabase
     try {
-        const m = JSON.parse(saved);
-        if (Date.now() - m.ts > 7 * 86400000) return false;
-        ({ convo, reqs, sol, prof, rn, fileContent, discoveryComplete } = {
-            convo: m.convo || [], reqs: m.reqs || null, sol: m.sol || null,
-            prof: m.prof || null, rn: m.rn || 0,
-            fileContent: m.fileContent || '', discoveryComplete: m.discoveryComplete || false
-        });
-        return true;
-    } catch { return false; }
+        const remote = await conversations.get(clientId);
+        if (remote && remote.convo && remote.convo.length > 0) {
+            ({ convo, rn, discovery_complete: discoveryComplete } = remote);
+            // Re-sync local
+            localStorage.setItem(`session_${clientId}`, JSON.stringify({
+                convo, reqs, sol, prof, rn, fileContent: '', discoveryComplete, ts: Date.now()
+            }));
+            return true;
+        }
+    } catch (e) { console.warn('[Load] Supabase failed', e); }
+
+    return false;
 }
 
 function saveFileToMemory(clientId, meta, content) {
@@ -1146,16 +1139,36 @@ function saveFileToMemory(clientId, meta, content) {
     localStorage.setItem(key, JSON.stringify(existing));
 }
 
-function renderClientFiles(clientId) {
+async function renderClientFiles(clientId) {
     const container = document.getElementById('clientFilesSection');
     if (!container) return;
-    const files = JSON.parse(localStorage.getItem(`files_${clientId}`) || '[]');
-    if (!files.length) { container.style.display = 'none'; return; }
-    container.style.display = 'block';
-    document.getElementById('filesList').innerHTML = files.map(f => `
-        <div class="file-row">
-            <div class="file-icon">${f.type?.startsWith('image/') ? '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="var(--sub)" stroke-width="1.5"/><path d="M4 14l3-3 2 2 4-5 3 3" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : f.type === 'application/pdf' ? '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><rect x="4" y="2" width="12" height="16" rx="2" stroke="var(--red)" stroke-width="1.5"/><path d="M8 7h4M8 10h4M8 13h2" stroke="var(--red)" stroke-width="1.3" stroke-linecap="round"/></svg>' : '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M3 5h5l2 2h7v10H3V5z" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'}</div>
-            <div><div class="file-name">${f.name}</div><div class="file-meta">${(f.size/1024).toFixed(1)}KB · ${new Date(f.ts).toLocaleString()}</div></div>
+    try {
+        const files = await documents.list(clientId);
+        if (!files || !files.length) { 
+            // Fallback to local if server list empty (optional)
+            const local = JSON.parse(localStorage.getItem(`files_${clientId}`) || '[]');
+            if (!local.length) { container.style.display = 'none'; return; }
+            renderFilesList(local, container);
+        } else {
+            renderFilesList(files, container);
+        }
+        container.style.display = 'block';
+    } catch (e) {
+        console.warn('[Files] list failed', e);
+        container.style.display = 'none';
+    }
+}
+
+function renderFilesList(files, container) {
+    const list = document.getElementById('filesList');
+    if (!list) return;
+    list.innerHTML = files.map(f => `
+        <div class="file-row" style="display:flex;align-items:center;justify-content:space-between">
+            <div style="display:flex;align-items:center;gap:12px">
+                <div class="file-icon">${f.type?.startsWith('image/') ? '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><rect x="2" y="3" width="16" height="14" rx="2" stroke="var(--sub)" stroke-width="1.5"/><path d="M4 14l3-3 2 2 4-5 3 3" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>' : (f.type === 'application/pdf' || (f.name||'').endsWith('.pdf')) ? '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><rect x="4" y="2" width="12" height="16" rx="2" stroke="var(--red)" stroke-width="1.5"/><path d="M8 7h4M8 10h4M8 13h2" stroke="var(--red)" stroke-width="1.3" stroke-linecap="round"/></svg>' : '<svg viewBox="0 0 20 20" width="20" height="20" fill="none"><path d="M3 5h5l2 2h7v10H3V5z" stroke="var(--sub)" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'}</div>
+                <div><div class="file-name">${f.name}</div><div class="file-meta">${((f.size||0)/1024).toFixed(1)}KB · ${new Date(f.created_at || f.ts).toLocaleString()}</div></div>
+            </div>
+            ${f.stored_name ? `<a href="${documents.download(f.stored_name)}" target="_blank" class="download-btn" title="Download File" style="color:var(--primary);cursor:pointer;padding:8px;border-radius:8px;background:rgba(59,130,246,.05);display:flex;align-items:center;justify-content:center"><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg></a>` : ''}
         </div>`).join('');
 }
 
@@ -1199,27 +1212,30 @@ function showReqSummary() {
         ${(reqs.success_metrics||[]).length ? `<div class="reqs-section"><div class="reqs-label">Success Metrics</div><ul class="reqs-list">${makeList(reqs.success_metrics)}</ul></div>` : ''}
         ${productChips ? `<div class="reqs-section"><div class="reqs-label">Recommended Zoho Products</div><div style="display:flex;flex-wrap:wrap;gap:6px;margin-top:4px">${productChips}</div></div>` : ''}
         <div class="reqs-actions" style="display:flex;flex-wrap:wrap;gap:10px;padding:16px 18px;background:var(--bg);border-top:1px solid var(--brd)">
-          <button class="reqs-btn-confirm" id="confirmProposal" style="flex:1;min-width:140px;display:flex;align-items:center;justify-content:center;gap:6px;padding:12px 20px;font-size:13px;border-radius:10px">
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M4 8l3 3 5-5" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <button class="reqs-btn-confirm" id="confirmProposal" style="flex:1.5;min-width:180px;display:flex;align-items:center;justify-content:center;gap:8px;padding:14px 20px;font-size:14px;font-weight:600;border-radius:12px;cursor:pointer;background:var(--green);color:#fff;border:none;box-shadow:0 4px 12px rgba(16,185,129,0.2)">
+            <svg viewBox="0 0 16 16" width="16" height="16" fill="none"><path d="M4 8l3 3 5-5" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
             Create Proposal
           </button>
-          <button class="reqs-btn-clarify" id="summaryBtn" style="display:flex;align-items:center;gap:6px;padding:12px 16px;border-radius:10px;background:#f3f4f6;color:#374151">
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M3 3h10v10H3V3z" stroke="currentColor" stroke-width="1.5"/><path d="M6 6h4M6 8h4M6 10h2" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/></svg>
-            Summary
-          </button>
-          <button class="reqs-btn-clarify" id="clarifyBtn" style="display:flex;align-items:center;gap:6px;padding:12px 16px;border-radius:10px">
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M11.5 1.5l3 3L5 14H2v-3z" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
-            Changes Required
-          </button>
-          <button class="reqs-btn-wrong" id="wrongBtn" style="display:flex;align-items:center;gap:6px;padding:12px 16px;border-radius:10px">
-            <svg viewBox="0 0 16 16" width="14" height="14" fill="none"><path d="M4 4l8 8M12 4l-8 8" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
-            Not Right
-          </button>
+          <div style="display:flex;gap:8px;flex:1;min-width:200px">
+            <button class="reqs-btn-sec" id="summaryBtn" title="View Summary" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--brd);background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--sub);cursor:pointer">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 3h8v10H4V3z M7 6h4 M7 8h4 M7 10h2"/></svg>
+              Summary
+            </button>
+            <button class="reqs-btn-sec" id="clarifyBtn" title="Request Changes" style="flex:1.5;padding:10px;border-radius:10px;border:1px solid var(--brd);background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--sub);cursor:pointer">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M11 2l3 3-9 9H2v-3l9-9z"/></svg>
+              Changes Required
+            </button>
+            <button class="reqs-btn-sec" id="wrongBtn" title="Start Over" style="flex:1;padding:10px;border-radius:10px;border:1px solid var(--brd);background:#fff;display:flex;align-items:center;justify-content:center;gap:6px;font-size:12px;color:var(--red);cursor:pointer">
+              <svg viewBox="0 0 16 16" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M4 4l8 8 M12 4l-8 8"/></svg>
+              Not Right
+            </button>
+          </div>
         </div>
       </div>
     </div>`;
 
-    addAg(html, { noEscape: true });
+    addAg(html, { isReqCard: true });
+
     setTimeout(() => {
         document.getElementById('confirmProposal')?.addEventListener('click', buildSolution);
         document.getElementById('summaryBtn')?.addEventListener('click', () => {
@@ -1522,40 +1538,65 @@ ul.bullets li{font-size:15px;color:var(--slate);margin-bottom:12px;position:rela
  */
 async function exportHtmlToPdf(htmlString, filename) {
     return new Promise((resolve, reject) => {
-        // Use a hidden iframe so the full HTML document renders with its own styles
+        // More aggressive sanitization to remove any non-HTML text
+        let clean = htmlString.replace(/```html|```/g, '').trim();
+        
+        // Try to find the first tag and last tag
+        const firstTag = clean.indexOf('<');
+        const lastTag = clean.lastIndexOf('>') + 1;
+        if (firstTag !== -1 && lastTag > firstTag) {
+            clean = clean.substring(firstTag, lastTag);
+        }
+
+        // Check if it's already a full document
+        const isFullDoc = clean.toLowerCase().includes('<html');
+
         const iframe = document.createElement('iframe');
-        iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:960px;height:auto;border:none;';
+        iframe.style.cssText = 'position:fixed;left:-9999px;top:0;width:1000px;height:auto;border:none;visibility:hidden;';
         document.body.appendChild(iframe);
 
         iframe.onload = () => {
-            // Wait a moment for fonts/styles to apply
             setTimeout(() => {
-                const body = iframe.contentDocument.body;
-                if (!body || !body.firstElementChild) {
+                const doc = iframe.contentDocument;
+                const container = doc.body;
+                
+                if (!container || (!container.children.length && !container.textContent.trim())) {
                     document.body.removeChild(iframe);
-                    reject(new Error('Empty document'));
+                    reject(new Error('Document content is missing'));
                     return;
                 }
 
                 const opt = {
-                    margin: 0,
+                    margin: [0.5, 0.5],
                     filename,
                     image: { type: 'jpeg', quality: 0.98 },
-                    html2canvas: { scale: 2, useCORS: true, windowWidth: 960 },
+                    html2canvas: { scale: 2, useCORS: true, letterRendering: true },
                     jsPDF: { unit: 'in', format: 'a4', orientation: 'portrait' }
                 };
 
-                html2pdf().set(opt).from(body.firstElementChild).save().then(() => {
+                html2pdf().set(opt).from(doc.documentElement).save().then(() => {
                     document.body.removeChild(iframe);
                     resolve();
                 }).catch(err => {
                     document.body.removeChild(iframe);
                     reject(err);
                 });
-            }, 500);
+            }, 1500); // 1.5s for stability
         };
 
-        iframe.srcdoc = htmlString;
+        if (isFullDoc) {
+            iframe.srcdoc = clean;
+        } else {
+            iframe.srcdoc = `<!DOCTYPE html><html><head>
+                <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+                <style>
+                    body { font-family: 'Inter', sans-serif; padding: 40px; color: #0F172A; line-height: 1.6; background: #fff; }
+                    h1, h2, h3 { color: #1E293B; margin-top: 1.5em; }
+                    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+                    th, td { border: 1px solid #E2E8F0; padding: 12px; text-align: left; }
+                    th { background: #F8FAFC; font-size: 12px; text-transform: uppercase; }
+                </style></head><body>${clean}</body></html>`;
+        }
     });
 }
 
@@ -1592,31 +1633,16 @@ document.addEventListener('generateBRD', async () => {
     if (!reqs || !cli) return;
     showLdr('Generating Business Requirements Document…');
     try {
-        const brdPrompt = `Generate a comprehensive Business Requirements Document (BRD) in clean HTML for ${cli.company}.
+        const brdPrompt = `Generate a PROFESSIONAL Business Requirements Document (BRD) for ${cli.company}.
+REQUIRED DATA: ${JSON.stringify(reqs)}
+SOLUTION DATA: ${JSON.stringify(sol || {})}
 
-REQUIREMENTS DATA:
-${JSON.stringify(reqs, null, 2)}
-
-SOLUTION DATA:
-${JSON.stringify(sol || {}, null, 2)}
-
-Generate a professional BRD HTML document with these sections:
-1. Executive Summary
-2. Business Objectives
-3. Project Scope (In-Scope / Out-of-Scope)
-4. Stakeholders & Roles
-5. Current State Analysis (current tools, pain points)
-6. Business Requirements (numbered, with priority: Must-Have / Nice-to-Have)
-7. Functional Requirements (grouped by department/module)
-8. Non-Functional Requirements (performance, security, scalability)
-9. Integration Requirements
-10. Success Criteria & KPIs
-11. Assumptions & Constraints
-12. Approval & Sign-off
-
-Use clean professional styling. Company: ${cli.company}, Industry: ${reqs.industry || cli.industry || '—'}.
-Include Fristine Infotech branding (India's leading Premium Zoho Partner).
-Return ONLY the complete HTML document, no markdown wrapping.`;
+OUTPUT RULES:
+1. RETURN ONLY A SINGLE <div> CONTAINER WITH ALL CONTENT.
+2. NO CONVERSATIONAL TEXT. NO MARKDOWN WRAPPERS.
+3. Use semantic HTML (h1, h2, table, p, ul).
+4. Include sections: Executive Summary, Business Objectives, Functional Requirements, Integration Needs, Success Metrics.
+5. Branding: Fristine Infotech (Premium Zoho Partner).`;
 
         const brdHtml = await gem(brdPrompt, 4000, 0.4, true);
         const cleanHtml = brdHtml.replace(/```html|```/g, '').trim();
@@ -1633,35 +1659,16 @@ document.addEventListener('generateFSD', async () => {
     if (!reqs || !cli) return;
     showLdr('Generating Functional Specification Document…');
     try {
-        const fsdPrompt = `Generate a comprehensive Functional Specification Document (FSD) in clean HTML for ${cli.company}.
+        const fsdPrompt = `Generate a PROFESSIONAL Functional Specification Document (FSD) for ${cli.company}.
+REQUIRED DATA: ${JSON.stringify(reqs)}
+SOLUTION DATA: ${JSON.stringify(sol || {})}
 
-REQUIREMENTS DATA:
-${JSON.stringify(reqs, null, 2)}
-
-SOLUTION DATA:
-${JSON.stringify(sol || {}, null, 2)}
-
-Generate a professional FSD HTML document with these sections:
-1. Document Control (version, date, author: Fristine Infotech Presales)
-2. Introduction & Purpose
-3. System Overview & Architecture
-4. Zoho Modules Configuration:
-   - For each recommended product, detail: module setup, custom fields, layouts, workflows, automation rules
-5. User Roles & Permissions Matrix
-6. Data Model & Field Mappings
-7. Business Process Workflows (step-by-step with triggers, conditions, actions)
-8. Automation Rules & Workflow Definitions
-9. Integration Specifications (APIs, data flow, sync frequency)
-10. Data Migration Plan (source → target mapping, cleansing rules)
-11. Reporting & Dashboard Specifications
-12. UAT Test Scenarios (test case ID, steps, expected result)
-13. Training Plan
-14. Deployment & Go-Live Checklist
-
-Products to configure: ${(reqs.zoho_products || sol?.primary_products || ['Zoho CRM']).join(', ')}
-Company: ${cli.company}, Industry: ${reqs.industry || cli.industry || '—'}, Users: ${reqs.user_count || '—'}
-Include Fristine Infotech branding.
-Return ONLY the complete HTML document, no markdown wrapping.`;
+OUTPUT RULES:
+1. RETURN ONLY A SINGLE <div> CONTAINER WITH ALL CONTENT.
+2. NO CONVERSATIONAL TEXT. NO MARKDOWN WRAPPERS.
+3. Use semantic HTML (h1, h2, table, p, ul).
+4. Include sections: Document Control, Zoho Module Configuration, Process Workflows, Integration Spec, UAT Scenarios.
+5. Branding: Fristine Infotech.`;
 
         const fsdHtml = await gem(fsdPrompt, 4000, 0.4, true);
         const cleanHtml = fsdHtml.replace(/```html|```/g, '').trim();

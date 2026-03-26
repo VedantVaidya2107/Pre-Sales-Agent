@@ -46,14 +46,23 @@ export const proposals = {
 
 /* ── Documents ── */
 export const documents = {
-  parse: async (file) => {
+  parse: async (clientId, file) => {
     const fd = new FormData();
     fd.append('file', file);
-    const res = await fetch(`${BASE}/api/documents/parse`, { method: 'POST', body: fd });
+    const res = await fetch(`${BASE}/api/documents/parse/${clientId}`, { method: 'POST', body: fd });
     const data = await res.json().catch(() => ({}));
     if (!res.ok) throw Object.assign(new Error(data.error || data.detail || 'API error'), { status: res.status, data });
     return data;
-  }
+  },
+  list:     (clientId) => request('GET', `/api/documents/list/${clientId}`),
+  download: (filename) => `${BASE}/api/documents/download/${filename}`,
+};
+
+/* ── Conversations ── */
+export const conversations = {
+  get:  (clientId) => request('GET',  `/api/conversations/${clientId}`),
+  save: (clientId, convo, rn, discoveryComplete) => 
+    request('POST', `/api/conversations/${clientId}`, { convo, rn, discovery_complete: discoveryComplete }),
 };
 
 /* ── Email ── */
